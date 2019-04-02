@@ -1,27 +1,18 @@
-/**
- * Requisição dos módulos
- */
-require('./express');
-require('./socket');
+const express = require('express')
+const app = require('express')()
+const http = require('http').createServer(app)
 
 /**
- * Declaração das constantes
+ * @Express Server
  */
-global.Player = require('./server_source/class/player')
-
-const ObjetosController = require('./server_source/class/objetos_controller');
-const LocaisController = require('./server_source/class/locais_controller');
-
-global.objetosController = new ObjetosController();
-global.locaisController = new LocaisController();
-
-// Vetor dos players
-global.players = {};
-
+app.get('/', (req, res)=>{
+	res.sendFile(__dirname+'/index.html')
+})
+app.use(express.static('assets'))
 
 /*
- * Envia a lista players pra quem está conectado 
+ * Porta do servidor
  */
-setInterval(function() {
-  io.emit('state', players);
-}, 1000 / 60);
+http.listen(3000, function(){
+	console.log('Listening on port 3000')
+})
