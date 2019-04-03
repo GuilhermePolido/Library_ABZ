@@ -8,7 +8,9 @@ const http = require('http').createServer(app)
 app.get('/', (req, res)=>{
 	res.sendFile(__dirname+'/index.html')
 })
-app.use(express.static('assets'))
+app.use(express.static('public'))
+
+require('./mysql');
 
 /*
  * Porta do servidor
