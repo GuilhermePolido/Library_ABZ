@@ -10,7 +10,7 @@ app.get('/', (req, res)=>{
 })
 app.use(express.static('public'))
 
-// require('./mysql');
+require('./mysql');
 
 /*
  * Porta do servidor
