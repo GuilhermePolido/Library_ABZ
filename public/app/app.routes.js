@@ -5,6 +5,9 @@
                 .when('/login', {
                     templateUrl: CONFIG.PATH + 'login/login.html'
                 })
+                .when('/livro', {
+                    templateUrl: CONFIG.PATH + 'livro/livro.html'
+                })
                 .otherwise({redirectTo: '/'});
 
         // $sceDelegateProvider.resourceUrlWhitelist([

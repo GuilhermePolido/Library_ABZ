@@ -5,7 +5,7 @@
                 $scope, $location, $http, $log, $httpParamSerializer, $timeout, $rootScope
                 ) {
                     let lg = this;
-                    lg.labelUser = "Usuario";
+                    $lg.labelUser = "Usuario";
                     lg.labelPassword = "Senha";
                     lg.message = 'Insira suas credenciais para logar';
                     lg.logged = false;
