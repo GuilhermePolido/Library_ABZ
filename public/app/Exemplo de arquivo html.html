@@ -1,0 +1,278 @@
+
+<div class="container" ng-controller="homeController">
+    <div ng-show="!mostrarInfo">
+        <div class="col col-lg-12 col-md-12 col-sm-12">
+            <div class="row">
+                <h3 id="title">Consulta das Atividades de Extensão</h3>
+            </div>
+            <div class="busca row">
+                <form>
+                    <div class="input-group col-lg-6 col-md-6 col-sm-6 col-md-offset-3 col-lg-offset-3 col-sm-offset-3">
+                        <input placeholder="Digite o Título, Número do projeto, Data,Situação Atual ou Centro do projeto" uib-tooltip="Buscar por palavras semelhantes, também é possível usar a Busca Avançada em conjunto" tooltip-placement="ytop" class="form-control" name="busca" ng-model="filtroDeBusca" type="text"/>
+                        <span class="input-group-btn">
+                            <button class="btn btn-primary" type="submit" ng-click="search()"><i class="fa fa-search" aria-hidden="true"></i></button>
+                        </span>                
+                    </div>
+                </form> 
+            </div>
+
+            <uib-accordion close-others="oneAtATime" class="buscaAvancada">
+                <div uib-accordion-group class="panel-default" is-open="status.open">
+                    <uib-accordion-heading>
+                        Busca Avançada<i class="pull-right glyphicon" ng-class="{
+                                'glyphicon-chevron-down': status.open, 'glyphicon-chevron-right': !status.open}"></i>
+                    </uib-accordion-heading>   
+                    <div class="row filtros jumbotron">
+                        <form name="filterForm">                        
+                            <div class="row addFilter">
+                                <h5><b>Adicionar filtros:</b></h5>
+                                <p class="subAddFilter">Utilize filtros para refinar o resultado de sua busca.</p>
+
+                                <div class="col-lg-4 col-md-4 col-sm-4">
+                                    <label id="tipoTitleFilter">Filtrar por:</label>
+                                    <div id="filtroTipo">
+                                        <select ng-model="filter.tipoFiltragem" id="tipoFilter" uib-tooltip="Escolha o que deseja filtrar" tooltip-placement="top" ng-change="trocaFiltros()" class="form-control">
+                                            <option selected="selected"></option> 
+                                            <option value="{{tipoFiltro.chave}}" ng-repeat="tipoFiltro in tiposFiltragens">{{tipoFiltro.valor}}</option>
+                                        </select>
+                                    </div>
+                                </div>
+
+                                <div class="col-lg-3 col-md-3 col-sm-3">
+                                    <label id="grdAreaTitleFilter">Condição de Filtragem</label>
+                                    <div id="filtroArea">
+                                        <select ng-model="filter.condicaoFiltragem" id="grdAreaFilter" uib-tooltip="Escolha a condição da sua filtragem" tooltip-placement="top" ng-change="trocaFiltros()" class="form-control" ng-disabled="!filter.tipoFiltragem">
+                                            <option selected="selected"></option> 
+                                            <option value="{{condicao.chave}}" ng-repeat="condicao in condicoes">{{condicao.valor}}</option>
+                                        </select>                                                                  
+                                    </div>
+                                </div>
+
+                                <div class="col-lg-4 col-md-4 col-sm-4">
+                                    <label id="sitAtualTitleFilter">Valor do Filtro:</label>
+                                    <div id="filtroSituacao"  ng-show="filter.tipoFiltragem < 5">
+                                        <select ng-model="filter.valorFiltro" class="sitAtualFilter form-control" uib-tooltip="Escolha o valor pelo qual o filtro irá buscar" tooltip-placement="top" ng-disabled="!filter.tipoFiltragem || !filter.condicaoFiltragem">                                    
+                                            <option selected="selected"></option>
+                                            <option value="{{valorFiltro.chave}}" ng-repeat="valorFiltro in valoresFiltro">{{valorFiltro.valor}}</option>                                        
+                                        </select>
+                                    </div> 
+                                    <div ng-show="filter.tipoFiltragem == 5">
+                                        <input placeholder="Digite o Participante" class="form-control" name="participante" ng-model="filter.valorFiltro" type="text" ng-disabled="!filter.tipoFiltragem || !filter.condicaoFiltragem"/>
+                                    </div> 
+                                    <div class="dataFilter" ng-show="filter.tipoFiltragem == 6">
+                                        <p class="input-group">
+                                            <input type="text" class="form-control" uib-datepicker-popup="dd/MM/yyyy" ui-mask="99/99/9999" model-view-value="true" uib-tooltip="Escolha a data do filtro, você pode utilizar o calendário para escolher uma data." tooltip-placement="bottom" ng-model="filter.valorFiltro" ng-disabled="!filter.tipoFiltragem || !filter.condicaoFiltragem" is-open="popup.opened" datepicker-options="dateOptions" ng-required="true" close-text="Fechar" clear-text="Limpar" current-text="Hoje" alt-input-formats="altInputFormats" />
+                                            <span class="input-group-btn">
+                                                <button type="button" class="btn btn-default" ng-click="openCalendar()"><i class="glyphicon glyphicon-calendar"></i></button>
+                                            </span>
+                                        </p>
+                                    </div>
+                                    <div class="alert alert-danger erroFilter" ng-show="respSituacao" role="alert">
+                                        {{mostrarMsgErro("carregar a lista de situações")}}                                                                       
+                                    </div>
+                                    <div class="alert alert-danger erroFilter" ng-show="respAtividades" role="alert">
+                                        {{mostrarMsgErro("carregar a lista de Atividades")}}                                                                       
+                                    </div> 
+                                    <div class="alert alert-danger erroFilter" ng-show="respArConhecimento" role="alert">
+                                        {{mostrarMsgErro("carregar a lista de Grande Áreas")}}                                                                       
+                                    </div>       
+                                </div> 
+                                <div class="col-lg-1 col-md-1 col-sm-1">
+                                    <button type="button" value="+" uib-tooltip="Adicionar" tooltip-placement="top" ng-disabled="!filter.valorFiltro" class="btn btn-primary btn-addFilters" ng-click="addFiltro(filter)"><i class="fa fa-plus"></i></button> 
+                                </div>                    
+                            </div>
+                            <div class="row addFilter">
+                                <h5><b>Mostrar:</b></h5>                                
+                                <div>
+                                    <input ng-model="justActive" ng-click="buscarAtivos(justActive)" type="checkbox"> Somente Atividades Ativas
+                                </div>   
+                                <div>
+                                    <input ng-model="justInadimplentes" ng-click="buscarInadimplentes(justInadimplentes)" type="checkbox"> Somente Inadimplentes
+                                </div>   
+                            </div>
+                        </form>
+                        <div class="resultadoFilters" ng-show="filtersCodigos.length > 0">
+                            <table class="table table-hover">
+                                <tr>                            
+                                    <th>Filtragem por</th>                                
+                                    <th>Condição de Filtragem</th>                                
+                                    <th>Valor do Filtro</th>                                
+                                    <th></th>                                
+                                </tr>
+                                <tr class="filtroscss warning" ng-repeat="filtro in filtersDescricao">
+                                    <td>{{filtro.tipoFiltragem}}</td>
+                                    <td>{{filtro.condicaoFiltragem}}</td>
+                                    <td>{{filtro.valorFiltro}}</td>
+                                    <td><span ng-click="deleteFiltro($index)" class="btn_delete" uib-tooltip="Excluir Filtro" tooltip-placement="left"><i class="glyphicon glyphicon-trash"></i></span></td>
+                                </tr>
+                            </table>
+                        </div>
+                    </div>
+                </div>
+            </uib-accordion>
+            <div class="panel panel-default">
+                <div class="row" style="margin: 10px;">
+                    <div class="panel-heading"><h3 class="panel-title text-center"><strong>Resultados</strong></h3></div>                  <p id="infResultados">{{infTotRes}}</p>
+                    <table class="listaBusca table table-hover" ng-show="projetos.length > 0">
+                        <tr>
+                            <th>Nº Projeto</th>
+                            <th ng-show="showData">Data de Início</th>
+                            <th>Unidade</th>
+                            <th ng-show="showCentro">Centro</th>
+                            <th>Tipo da Atividade</th>
+                            <th>Título</th>
+                            <th>Situação Atual</th>
+                        </tr>
+                        <!--<tr ng-repeat="projeto in projetos" class="{{trocaClass()}}"> com problemas-->
+                        <tr ng-repeat="projeto in projetos" class="{{projeto.class}}">
+                            <td>{{projeto.projeto.prjNumero}}</td>
+                            <td ng-show="showData">{{projeto.projeto.prjDtInicio| date: dateFormat}}</td>
+                            <td>{{projeto.projeto.prjCampus.strCodigo.strDescricao}}</td>
+                            <td ng-show="showCentro">{{projeto.projeto.strProjeto.strDescricao}}</td>
+                            <td>{{projeto.atvCodigo.atvDescricao}}</td>
+                            <td><span ng-click="bindInformation(projeto.projeto.prjNumero)" class="abrirDetalhes">{{projeto.projeto.prjTitulo}}</span></td>
+                            <td>{{projeto.projeto.stcCodigo.stcDescricao}}</td>
+                        </tr>
+                    </table>
+                    <div class="text-center" ng-show="buscandoProjetos">
+                        <i class="fa fa-spinner load"aria-hidden="true"></i>
+                    </div>
+                    <div class="text-center" ng-show="projetos.length <= 0 && !buscandoProjetos">
+                        <h4><b>Nenhuma Atividade de Extensão Encontrada</b></h4>
+                    </div>
+                    <div class="alert alert-danger" ng-show="resp" role="alert">
+                        {{mostrarMsgErro("carregar as Atividades")}}                                                                       
+                    </div> 
+                    <div class="row">  
+                        <ul uib-pagination total-items="totalItems" ng-model="currentPage" ng-change="pageChanged()" items-per-page="limit" max-size="maxSize" next-text=">" first-text="<<" last-text=">>" previous-text="<" class="pagination-sm" boundary-links="true" rotate="false"></ul>
+                    </div>            
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <div ng-show="mostrarInfo">
+        <div class="col col-lg-12 col-md-12 col-sm-12">
+
+            <div class="row">
+                <h3 id="title">Consulta das Atividades de Extensão</h3>
+            </div>
+
+            <button class="btn btn-primary" ng-click="bindProjetos()" uib-tooltip="Retorna aos resultados sem perder os filtros utilizados" tooltip-placement="top"><i class="glyphicon glyphicon-chevron-left"></i> Voltar aos Resultados</button>
+
+            <div class="row">
+                <span class="alert alert-danger" ng-class='{"invisible": !respInf}' role="alert">
+                    Ocorreu um erro inesperado, por favor, recarregue a pagina, se o erro persistir, entre em contato com o suporte técnico.
+                </span>
+                <uib-tabset active="active">
+                    <uib-tab index="0" heading="Informações">
+                        <table class="tableInf table table-hover" ng-class='{"invisible": respInf}' ng-show="projetoComplete">
+                            <tr>                  
+                                <th class="titleInfo">Título:</th>                
+                                <td class="inf">{{projetoComplete.projeto.prjTitulo}}</td>
+                            </tr>
+                            <tr>
+                                <th class="titleInfo">Tipo da Atividade:</th>
+                                <td class="inf">{{projetoComplete.atvCodigo.atvDescricao}}</td>
+                            </tr>
+                            <tr>                   
+                                <th class="titleInfo">Unidade:</th>
+                                <td class="inf">{{projetoComplete.projeto.prjCampus.strCodigo.strDescricao}}</td>
+                            </tr>
+                            <tr>
+                                <th class="titleInfo">Centro:</th>                      
+                                <td class="inf">{{projetoComplete.projeto.strProjeto.strDescricao}}</td>
+                            </tr>
+                            <tr>                    
+                                <th class="titleInfo">Número do Projeto:</th>                   
+                                <td class="inf">{{projetoComplete.projeto.prjNumero}}</td>
+                            </tr>
+                            <tr>                   
+                                <th class="titleInfo">Data de Início:</th>                   
+                                <td class="inf">{{projetoComplete.projeto.prjDtInicio| date: dateFormat}}</td>
+                            </tr>
+                            <tr>                    
+                                <th class="titleInfo">Data Previsto para o Término:</th>                
+                                <td class="inf">{{projetoComplete.projeto.prjPrvDtTermino| date: dateFormat}}</td>
+                            </tr>
+                            <tr>                   
+                                <th class="titleInfo">Data de Término:</th>                
+                                <td class="inf">{{projetoComplete.projeto.prjDtTermino| date: dateFormat}}</td>
+                            </tr>
+                            <tr>                  
+                                <th class="titleInfo">Situação Atual:</th>                
+                                <td class="inf">{{projetoComplete.projeto.stcCodigo.stcDescricao}}</td>
+                            </tr>                        
+                            <tr>                  
+                                <th class="titleInfo">Grande Área:</th>                
+                                <td class="inf">{{projetoComplete.projeto.arCnhGrdArea.arCnhDescricao}}</td>
+                            </tr>
+                            <tr>                  
+                                <th class="titleInfo">Área Temática Principal:</th>                
+                                <td class="inf">{{projetoComplete.arTmtPrnCodigo.arTmtPrnDescricao}}</td>
+                            </tr>
+                            <tr>                  
+                                <th class="titleInfo">Área Temática Secundária:</th>                
+                                <td class="inf">{{projetoComplete.arTmtScnCodigo.arTmtScnDescricao}}</td>
+                            </tr>
+                            <tr>                  
+                                <th class="titleInfo">Linha de Extensão:</th>                
+                                <td class="inf">{{projetoComplete.lnhPrgCodigo.lnhPrgDescricao}}</td>
+                            </tr>
+                            <tr>                  
+                                <th class="titleInfo">Público Alvo:</th>                
+                                <td class="inf">{{projetoComplete.prjAtvExtPblAlvo}}</td>
+                            </tr>
+                        </table>
+                        <div class="text-center" ng-show="buscandoProjetosInf">
+                            <i class="fa fa-spinner load"aria-hidden="true"></i>
+                        </div>
+                    </uib-tab>
+                    <uib-tab index="1" heading="Resumo">
+                        <table class="tableInf" ng-class='{"invisible": respInf}' ng-show="projetoComplete">
+                            <tr>
+                            <h5 class="titleInfo" ng-show="projetoComplete.projeto.prjRsmInicial"><b>Resumo Inícial:</b></h5>    
+                            <p class="inf resumo">{{projetoComplete.projeto.prjRsmInicial}}</p>
+                            </tr>
+                        </table>
+                        <p class="bg-info resumoNull" ng-show="!projetoComplete.projeto.prjRsmInicial && !buscandoProjetosInf">Não foi encontrado nenhum registro de resumo para esta atividade</p>
+                        <div class="text-center" ng-show="buscandoProjetosInf">
+                            <i class="fa fa-spinner load"aria-hidden="true"></i>
+                        </div>
+                    </uib-tab>
+                    <uib-tab index="2" heading="Participantes">
+                        <table class="tablePart table table-hover" ng-class='{"invisible": respInf}' ng-hide="!PrjHstParticipante[0].pssFscCodigo.pssFscNome">
+                            <tr>
+                                <th id="tNome" class="titleInfo">Nome</th>                
+                                <th id="tCentro" class="titleInfo">Centro</th>                
+                                <th id="tCh" class="titleInfo">C/H</th>                
+                                <th id="tDataEntrada" class="titleInfo">Data de Entrada</th>                
+                                <th id="tDataSaida" class="titleInfo">Data de Saída</th>                
+                                <th id="tParticipacao" class="titleInfo">Participação</th>                
+                                <th id="tVinculo" class="titleInfo">Vínculo</th>                
+                            </tr>                     
+
+                            <tr ng-repeat="participante in PrjHstParticipante" class="{{participante.class}}">
+                                <td id="iNome" class="inf">{{participante.pssFscCodigo.pssFscNome}}</td>
+                                <td id="iCentro" class="inf">{{participante.projeto.prjCampus.strCodigo.strDescricao}}</td>
+                                <td id="iCh" class="inf">{{participante.prjHstPrtCrgHoraria}}</td>
+                                <td id="iDataEntrada" class="inf">{{participante.prjHstPrtDtEntrada| date: dateFormat}}</td>
+                                <td id="iDataSaida" class="inf">{{participante.prjHstPrtDtSaida| date: dateFormat}}</td>
+                                <td id="iParticipacao" class="inf">{{participante.tpPrjPrtCodigo.tpPrjPrtDescricao}}</td>
+                                <td id="iVinculo" class="inf">{{participante.rlcPssFisicaVinculo.vinculo.vncDescricao}}</td>
+                            </tr>
+                        </table>
+                        <br>
+                        <p class="bg-info resumoNull" ng-show="!PrjHstParticipante[0].pssFscCodigo.pssFscNome && !buscandoParticipantes && !respPart">Não foi encontrado nenhum registro de participantes para esta atividade</p>
+                        <div class="text-center" ng-show="buscandoParticipantes">
+                            <i class="fa fa-spinner load"aria-hidden="true"></i>
+                        </div>
+                        <div class="alert alert-danger" ng-class='{"invisible": !respPart}' role="alert">
+                            Não foi possível listar os participantes, por favor, recarregue a pagina, se o erro persistir, entre em contato com o suporte técnico.
+                        </div>
+                    </uib-tab>
+                </uib-tabset>            
+            </div>
+        </div>
+    </div>
+</div>
