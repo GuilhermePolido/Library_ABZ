@@ -3,3 +3,6 @@ const router = express.Router();
 const controller = require('../controllers/livro-controller');
 
 router.get('/', controller.get);
+router.post('/', controller.post);
+
+module.exports = router;
