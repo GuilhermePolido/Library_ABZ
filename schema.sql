@@ -1,0 +1,272 @@
+-- MySQL Workbench Forward Engineering
+
+SET @OLD_UNIQUE_CHECKS=@@UNIQUE_CHECKS, UNIQUE_CHECKS=0;
+SET @OLD_FOREIGN_KEY_CHECKS=@@FOREIGN_KEY_CHECKS, FOREIGN_KEY_CHECKS=0;
+SET @OLD_SQL_MODE=@@SQL_MODE, SQL_MODE='TRADITIONAL,ALLOW_INVALID_DATES';
+
+-- -----------------------------------------------------
+-- Schema mydb
+-- -----------------------------------------------------
+
+-- -----------------------------------------------------
+-- Schema mydb
+-- -----------------------------------------------------
+CREATE SCHEMA IF NOT EXISTS `mydb` DEFAULT CHARACTER SET utf8 ;
+USE `mydb` ;
+
+-- -----------------------------------------------------
+-- Table `mydb`.`USUARIO`
+-- -----------------------------------------------------
+CREATE TABLE IF NOT EXISTS `mydb`.`USUARIO` (
+  `CD_USUARIO` VARCHAR(50) NOT NULL,
+  `DS_SENHA` VARCHAR(255) NOT NULL,
+  `DS_EMAIL` VARCHAR(45) NULL,
+  `NM_USUARIO` VARCHAR(60) NULL,
+  `NR_TELEFONE` VARCHAR(19) NULL,
+  `DT_MANUTENCAO` DATE NULL,
+  PRIMARY KEY (`CD_USUARIO`))
+ENGINE = InnoDB;
+
+
+-- -----------------------------------------------------
+-- Table `mydb`.`ESTANTE`
+-- -----------------------------------------------------
+CREATE TABLE IF NOT EXISTS `mydb`.`ESTANTE` (
+  `CD_ESTANTE` INT NOT NULL AUTO_INCREMENT,
+  `CD_ADMINISTRADOR` VARCHAR(50) NOT NULL,
+  `DT_MANUTENCAO` DATE NULL,
+  PRIMARY KEY (`CD_ESTANTE`),
+  INDEX `fk_ESTANTE_USUARIO1_idx` (`CD_ADMINISTRADOR` ASC),
+  CONSTRAINT `fk_ESTANTE_USUARIO1`
+    FOREIGN KEY (`CD_ADMINISTRADOR`)
+    REFERENCES `mydb`.`USUARIO` (`CD_USUARIO`)
+    ON DELETE NO ACTION
+    ON UPDATE NO ACTION)
+ENGINE = InnoDB;
+
+
+-- -----------------------------------------------------
+-- Table `mydb`.`LIVRO`
+-- -----------------------------------------------------
+CREATE TABLE IF NOT EXISTS `mydb`.`LIVRO` (
+  `CD_LIVRO` INT NOT NULL AUTO_INCREMENT,
+  `DS_TITULO` VARCHAR(80) NULL,
+  `NM_AUTOR` VARCHAR(60) NULL,
+  `NM_EDITOR` VARCHAR(45) NULL,
+  `NR_PAGINA` INT NULL,
+  `QT_LIVRO` INT NULL,
+  `NR_CLASSIFICACAO` INT NULL,
+  `DS_SUMARIO` VARCHAR(200) NULL,
+  `DT_MANUTENCAO` DATE NULL,
+  `CD_ESTANTE` INT NOT NULL,
+  `ST_LIVRO` INT NULL COMMENT 'Situação do livro: (0) Disponivel, (1) Emprestado',
+  PRIMARY KEY (`CD_LIVRO`),
+  INDEX `fk_LIVRO_ESTANTE1_idx` (`CD_ESTANTE` ASC),
+  CONSTRAINT `fk_LIVRO_ESTANTE1`
+    FOREIGN KEY (`CD_ESTANTE`)
+    REFERENCES `mydb`.`ESTANTE` (`CD_ESTANTE`)
+    ON DELETE NO ACTION
+    ON UPDATE NO ACTION)
+ENGINE = InnoDB;
+
+
+-- -----------------------------------------------------
+-- Table `mydb`.`RESERVA`
+-- -----------------------------------------------------
+CREATE TABLE IF NOT EXISTS `mydb`.`RESERVA` (
+  `CD_RESERVA` INT NOT NULL AUTO_INCREMENT,
+  `CD_LIVRO` INT NOT NULL,
+  `CD_USUARIO` VARCHAR(50) NOT NULL,
+  `DT_MANUTENCAO` DATE NULL,
+  `DT_RESERVA` DATE NULL,
+  PRIMARY KEY (`CD_RESERVA`),
+  INDEX `fk_RESERVA_LIVRO1_idx` (`CD_LIVRO` ASC),
+  INDEX `fk_RESERVA_USUARIO1_idx` (`CD_USUARIO` ASC),
+  CONSTRAINT `fk_RESERVA_LIVRO1`
+    FOREIGN KEY (`CD_LIVRO`)
+    REFERENCES `mydb`.`LIVRO` (`CD_LIVRO`)
+    ON DELETE NO ACTION
+    ON UPDATE NO ACTION,
+  CONSTRAINT `fk_RESERVA_USUARIO1`
+    FOREIGN KEY (`CD_USUARIO`)
+    REFERENCES `mydb`.`USUARIO` (`CD_USUARIO`)
+    ON DELETE NO ACTION
+    ON UPDATE NO ACTION)
+ENGINE = InnoDB;
+
+
+-- -----------------------------------------------------
+-- Table `mydb`.`EMPRESTIMO`
+-- -----------------------------------------------------
+CREATE TABLE IF NOT EXISTS `mydb`.`EMPRESTIMO` (
+  `CD_EMPRESTIMO` INT NOT NULL AUTO_INCREMENT,
+  `DT_DEVOLUCAO` DATE NULL,
+  `CD_USUARIO` VARCHAR(50) NOT NULL,
+  `DT_EMPRESTIMO` DATE NULL,
+  `DT_MANUTENCAO` DATE NULL,
+  `LIVRO_CD_LIVRO` INT NOT NULL,
+  PRIMARY KEY (`CD_EMPRESTIMO`),
+  INDEX `fk_EMPRESTIMO_USUARIO1_idx` (`CD_USUARIO` ASC),
+  INDEX `fk_EMPRESTIMO_LIVRO1_idx` (`LIVRO_CD_LIVRO` ASC),
+  CONSTRAINT `fk_EMPRESTIMO_USUARIO1`
+    FOREIGN KEY (`CD_USUARIO`)
+    REFERENCES `mydb`.`USUARIO` (`CD_USUARIO`)
+    ON DELETE NO ACTION
+    ON UPDATE NO ACTION,
+  CONSTRAINT `fk_EMPRESTIMO_LIVRO1`
+    FOREIGN KEY (`LIVRO_CD_LIVRO`)
+    REFERENCES `mydb`.`LIVRO` (`CD_LIVRO`)
+    ON DELETE NO ACTION
+    ON UPDATE NO ACTION)
+ENGINE = InnoDB;
+
+
+-- -----------------------------------------------------
+-- Table `mydb`.`DEVOLUCAO`
+-- -----------------------------------------------------
+CREATE TABLE IF NOT EXISTS `mydb`.`DEVOLUCAO` (
+  `CD_DEVOLUCAO` INT NOT NULL AUTO_INCREMENT,
+  `CD_EMPRESTIMO` INT NOT NULL,
+  `DT_DEVOLUCAO` DATE NULL,
+  `CD_USUARIO` VARCHAR(50) NOT NULL,
+  `DT_MANUTENCAO` DATE NULL,
+  PRIMARY KEY (`CD_DEVOLUCAO`),
+  INDEX `fk_DEVOLUCAO_EMPRESTIMO1_idx` (`CD_EMPRESTIMO` ASC),
+  INDEX `fk_DEVOLUCAO_USUARIO1_idx` (`CD_USUARIO` ASC),
+  CONSTRAINT `fk_DEVOLUCAO_EMPRESTIMO1`
+    FOREIGN KEY (`CD_EMPRESTIMO`)
+    REFERENCES `mydb`.`EMPRESTIMO` (`CD_EMPRESTIMO`)
+    ON DELETE NO ACTION
+    ON UPDATE NO ACTION,
+  CONSTRAINT `fk_DEVOLUCAO_USUARIO1`
+    FOREIGN KEY (`CD_USUARIO`)
+    REFERENCES `mydb`.`USUARIO` (`CD_USUARIO`)
+    ON DELETE NO ACTION
+    ON UPDATE NO ACTION)
+ENGINE = InnoDB;
+
+
+-- -----------------------------------------------------
+-- Table `mydb`.`COMENTARIO`
+-- -----------------------------------------------------
+CREATE TABLE IF NOT EXISTS `mydb`.`COMENTARIO` (
+  `CD_COMENTARIO` INT NOT NULL AUTO_INCREMENT,
+  `DS_COMENTARIO` VARCHAR(45) NULL,
+  `CD_LIVRO` INT NOT NULL,
+  `DT_MANUTENCAO` VARCHAR(45) NULL,
+  `CD_USUARIO` VARCHAR(50) NULL,
+  PRIMARY KEY (`CD_COMENTARIO`),
+  INDEX `fk_COMENTARIO_LIVRO1_idx` (`CD_LIVRO` ASC),
+  INDEX `fk_COMENTARIO_USUARIO1_idx` (`CD_USUARIO` ASC),
+  CONSTRAINT `fk_COMENTARIO_LIVRO1`
+    FOREIGN KEY (`CD_LIVRO`)
+    REFERENCES `mydb`.`LIVRO` (`CD_LIVRO`)
+    ON DELETE NO ACTION
+    ON UPDATE NO ACTION,
+  CONSTRAINT `fk_COMENTARIO_USUARIO1`
+    FOREIGN KEY (`CD_USUARIO`)
+    REFERENCES `mydb`.`USUARIO` (`CD_USUARIO`)
+    ON DELETE NO ACTION
+    ON UPDATE NO ACTION)
+ENGINE = InnoDB;
+
+
+-- -----------------------------------------------------
+-- Table `mydb`.`LOGUSUARIO`
+-- -----------------------------------------------------
+CREATE TABLE IF NOT EXISTS `mydb`.`LOGUSUARIO` (
+  `CD_LOG` INT NOT NULL AUTO_INCREMENT,
+  `DS_LOG` VARCHAR(255) NULL,
+  `CD_USUARIO` VARCHAR(50) NOT NULL,
+  `DT_MANUTENCAO` DATE NULL,
+  `HR_LOG` DATETIME NULL,
+  PRIMARY KEY (`CD_LOG`),
+  INDEX `fk_LOGUSUARIO_USUARIO1_idx` (`CD_USUARIO` ASC),
+  CONSTRAINT `fk_LOGUSUARIO_USUARIO1`
+    FOREIGN KEY (`CD_USUARIO`)
+    REFERENCES `mydb`.`USUARIO` (`CD_USUARIO`)
+    ON DELETE NO ACTION
+    ON UPDATE NO ACTION)
+ENGINE = InnoDB;
+
+
+-- -----------------------------------------------------
+-- Table `mydb`.`CAPALIVRO`
+-- -----------------------------------------------------
+CREATE TABLE IF NOT EXISTS `mydb`.`CAPALIVRO` (
+  `CD_CAPALIVRO` INT NOT NULL AUTO_INCREMENT,
+  `CD_LIVRO` INT NOT NULL,
+  `DS_LOCALCAPA` VARCHAR(255) NULL COMMENT 'Caminho para a capa do livro',
+  `DS_LOCALLATERAL` VARCHAR(255) NULL,
+  `DT_MANUTENCAO` DATE NULL,
+  PRIMARY KEY (`CD_CAPALIVRO`),
+  INDEX `fk_capalivro_livro_idx` (`CD_LIVRO` ASC),
+  CONSTRAINT `fk_capalivro_livro`
+    FOREIGN KEY (`CD_LIVRO`)
+    REFERENCES `mydb`.`LIVRO` (`CD_LIVRO`)
+    ON DELETE NO ACTION
+    ON UPDATE NO ACTION)
+ENGINE = InnoDB;
+
+
+-- -----------------------------------------------------
+-- Table `mydb`.`DISCIPLINA`
+-- -----------------------------------------------------
+CREATE TABLE IF NOT EXISTS `mydb`.`DISCIPLINA` (
+  `CD_DISCIPLINA` VARCHAR(6) NOT NULL,
+  `NM_DISCIPLINA` VARCHAR(45) NULL,
+  `DS_PLANOENSINO` VARCHAR(200) NULL,
+  `DT_MANUTENCAO` DATE NULL,
+  PRIMARY KEY (`CD_DISCIPLINA`))
+ENGINE = InnoDB;
+
+
+-- -----------------------------------------------------
+-- Table `mydb`.`DISCIPLINA_REF_COMPOLEMENTAR`
+-- -----------------------------------------------------
+CREATE TABLE IF NOT EXISTS `mydb`.`DISCIPLINA_REF_COMPOLEMENTAR` (
+  `CD_DISCIPLINA` VARCHAR(6) NOT NULL,
+  `CD_LIVRO` INT NOT NULL,
+  `DT_MANUTENCAO` DATE NULL,
+  PRIMARY KEY (`CD_DISCIPLINA`, `CD_LIVRO`),
+  INDEX `fk_DISCIPLINA_has_LIVRO_LIVRO1_idx` (`CD_LIVRO` ASC),
+  INDEX `fk_DISCIPLINA_has_LIVRO_DISCIPLINA1_idx` (`CD_DISCIPLINA` ASC),
+  CONSTRAINT `fk_DISCIPLINA_has_LIVRO_DISCIPLINA1`
+    FOREIGN KEY (`CD_DISCIPLINA`)
+    REFERENCES `mydb`.`DISCIPLINA` (`CD_DISCIPLINA`)
+    ON DELETE NO ACTION
+    ON UPDATE NO ACTION,
+  CONSTRAINT `fk_DISCIPLINA_has_LIVRO_LIVRO1`
+    FOREIGN KEY (`CD_LIVRO`)
+    REFERENCES `mydb`.`LIVRO` (`CD_LIVRO`)
+    ON DELETE NO ACTION
+    ON UPDATE NO ACTION)
+ENGINE = InnoDB;
+
+
+-- -----------------------------------------------------
+-- Table `mydb`.`DISCIPLINA_REF_BASICA`
+-- -----------------------------------------------------
+CREATE TABLE IF NOT EXISTS `mydb`.`DISCIPLINA_REF_BASICA` (
+  `CD_DISCIPLINA` VARCHAR(6) NOT NULL,
+  `CD_LIVRO` INT NOT NULL,
+  `DT_MANUTENCAO` DATE NULL,
+  PRIMARY KEY (`CD_DISCIPLINA`, `CD_LIVRO`),
+  INDEX `fk_DISCIPLINA_has_LIVRO1_LIVRO1_idx` (`CD_LIVRO` ASC),
+  INDEX `fk_DISCIPLINA_has_LIVRO1_DISCIPLINA1_idx` (`CD_DISCIPLINA` ASC),
+  CONSTRAINT `fk_DISCIPLINA_has_LIVRO1_DISCIPLINA1`
+    FOREIGN KEY (`CD_DISCIPLINA`)
+    REFERENCES `mydb`.`DISCIPLINA` (`CD_DISCIPLINA`)
+    ON DELETE NO ACTION
+    ON UPDATE NO ACTION,
+  CONSTRAINT `fk_DISCIPLINA_has_LIVRO1_LIVRO1`
+    FOREIGN KEY (`CD_LIVRO`)
+    REFERENCES `mydb`.`LIVRO` (`CD_LIVRO`)
+    ON DELETE NO ACTION
+    ON UPDATE NO ACTION)
+ENGINE = InnoDB;
+
+
+SET SQL_MODE=@OLD_SQL_MODE;
+SET FOREIGN_KEY_CHECKS=@OLD_FOREIGN_KEY_CHECKS;
+SET UNIQUE_CHECKS=@OLD_UNIQUE_CHECKS;
