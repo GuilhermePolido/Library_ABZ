@@ -1,6 +1,8 @@
 exports.create = async(livro) => {
-    db.query('INSERT INTO livro SET ?', livro, (err, results, fields) => {
-        if(err) throw err;
+    return new Promise((resolve, reject) => {
+        db.query('INSERT INTO livro SET ?', livro, (err, results, fields) => {
+            if(err) reject();
+        })
     })
 }
 

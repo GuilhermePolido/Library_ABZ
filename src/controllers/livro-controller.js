@@ -13,7 +13,7 @@ exports.get = async(req, res, next) => {
 
 exports.post = async(req, res, next) => {
     try {
-        repository.create(req.body);
+        await repository.create(req.body);
         res.status(200).send('Livro cadastrado com sucesso!');
     } catch(e) {
         res.status(500).send({
