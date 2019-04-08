@@ -1,0 +1,16 @@
+<div class="container" ng-controller="loginController as lg">
+    <form>
+        <div class="alert alert-info" role="alert">{{lg.message}}</div>
+        <div class="form-group">
+          <label for="exampleInputEmail1">{{lg.labelUser}}</label>
+          <input type="text" class="form-control" name="busca" ng-model="lg.userName" id="exampleInputEmail1" placeholder="Email">
+        </div>
+        <div class="form-group">
+          <label for="exampleInputPassword1">{{lg.labelPassword}}</label>
+          <input type="password" class="form-control" ng-model="lg.password" id="exampleInputPassword1" placeholder="Password">
+        </div>
+        {{lg.userName}}
+        {{lg.password}}
+        <button type="submit" ng-click="lg.enviar()" class="btn btn-default">Submit</button>
+      </form>
+</div>
