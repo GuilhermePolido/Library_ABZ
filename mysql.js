@@ -1,16 +1,16 @@
-var mysql = require('mysql');
+const mysql = require('mysql');
+
 global.db = mysql.createConnection({
-  host     : '',
-  user     : 'id9180078_geison',
-  password : 'bibliotecaabz',
-  database : 'id9180078_biblioteca'
+  host     : 'localhost',
+  user     : 'root',
+  password : '',
+  database : 'mydb'
 });
 
-db.connect();
-
-db.query('SELECT * from teste', function (error, results, fields) {
-  if (error) throw error;
- console.log(results[0])
+db.connect(function(err){
+  if(err) {
+    console.log()
+  }
 })
 
-db.end();
+/** Testa a conexão fazendo esse SELECT */
