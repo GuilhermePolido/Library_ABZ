@@ -1,0 +1,26 @@
+<div class="container" ng-controller="listLivroController as lv">
+  {{labelTitulo}}
+  <div class="panel panel-default">
+    <div class="row" style="margin: 10px;">
+      <div class="panel-heading">
+        <h3 class="panel-title text-center"><strong>Livros</strong></h3>
+      </div>
+      <table class="listaLivros table table-hover" ng-show="lv.livros.length > 0">
+        <tr>
+          <th>Codigo</th>
+          <th>Titulo</th>
+          <th>Autor</th>
+          <th>Situação</th>
+          <th>Estante</th>
+        </tr>
+        <tr ng-repeat="livro in lv.livros">
+          <td>{{livro.CD_LIVRO}}</td>
+          <td>{{livro.DS_TITULO}}</td>
+          <td>{{livro.NM_AUTOR}}</td>
+          <td>{{livro.ST_LIVRO}}</td>
+          <td>{{livro.CD_ESTANTE}}</td>
+        </tr>
+      </table>
+    </div>
+  </div>
+</div>
