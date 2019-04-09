@@ -2,11 +2,14 @@
 (function () {
     angular.module('LIBABZ').config(function ($routeProvider, CONFIG, $sceDelegateProvider) {
         $routeProvider
-                .when('/login', {
-                    templateUrl: CONFIG.PATH + 'login/login.html'
+                .when('/', {
+                    templateUrl: CONFIG.PATH + 'home/home.html'
                 })
-                .when('/livro', {
-                    templateUrl: CONFIG.PATH + 'livro/livro.html'
+                .when('/livros', {
+                    templateUrl: CONFIG.PATH + 'livro/list/listLivros.html'
+                })
+                .when('/livros/new', {
+                    templateUrl: CONFIG.PATH + 'livro/new/newLivro.html'
                 })
                 .otherwise({redirectTo: '/'});
 
