@@ -4,6 +4,7 @@ const controller = require('../controllers/livro-controller');
 
 router.get('/', controller.get);
 router.get('/:id', controller.getById);
+router.post('/find', controller.find);
 router.post('/', controller.post);
 router.put('/:id', controller.put);
 router.delete('/', controller.delete);

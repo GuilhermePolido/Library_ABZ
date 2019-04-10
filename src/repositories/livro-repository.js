@@ -42,3 +42,30 @@ exports.delete = async(id) => {
         })       
     })
 }
+
+exports.find = async(filtros) => {
+    filtros = JSON.stringify(filtros);
+    filtros = filtros.toLowerCase();
+    filtros = JSON.parse(filtros);
+
+    var qry = 'SELECT * FROM livro WHERE 1 = 1 ';
+
+    if(filtros.ds_titulo && typeof filtros.ds_titulo !== "undefined") {
+        qry += 'AND DS_TITULO LIKE "%' + filtros.ds_titulo + '%"';
+    }
+
+    if(filtros.nm_autor && typeof filtros.nm_autor !== "undefined") {
+        qry += 'AND NM_AUTOR LIKE "%' + filtros.nm_autor + '%"';
+    }
+
+    if(filtros.nm_editor && typeof filtros.nm_editor !== "undefined") {
+        qry += 'AND NM_EDITOR LIKE "%' + filtros.nm_editor + '%"';
+    }
+
+    return new Promise((resolve, reject) => {
+        db.query(qry, (err, results, fields) => {
+            if(err) reject();
+            resolve(results);
+        })       
+    })
+}

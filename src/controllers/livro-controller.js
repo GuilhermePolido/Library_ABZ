@@ -22,6 +22,16 @@ exports.getById = async(req, res, next) => {
     }
 }
 
+exports.find = async(req, res, next) => {
+    try {
+        var data = await repository.find(req.body);
+        res.status(200).send(data);
+    } catch (e) {
+        res.status(500).send({
+            message: 'Falha ao processar sua requisição'+e
+        });
+    }
+}
 
 exports.post = async(req, res, next) => {
     try {
