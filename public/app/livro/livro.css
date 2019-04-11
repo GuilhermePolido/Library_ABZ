@@ -1,0 +1,7 @@
+.select-disciplinas {
+    display: flex;
+}
+
+.select-disciplinas .btn {
+    margin-left: 14px;
+}

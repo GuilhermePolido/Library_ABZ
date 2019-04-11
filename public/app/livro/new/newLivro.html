@@ -24,7 +24,16 @@
 
           <label for="sumario">Sumário</label>
           <input type="text" class="form-control" name="sumario" ng-model="lv.sumario" id="sumario" placeholder="Sumário do livro">
+          
+          <label for="disciplina">Disciplina</label>
+          <div class="select-disciplinas">
+              <select id="disciplina" ng-model="lv.disciplina" class="form-control" >                                    
+                <option value="{{disc.CD_DISCIPLINA}}" ng-repeat="disc in lv.allDisciplinas">{{disc.NM_DISCIPLINA}}</option>                                        
+              </select>
+              <button type="button" class="btn btn-primary" ng-click="lv.addDisciplina()"><i class="fas fa-plus"></i></button>
+          </div>
         </div>
+        {{lv.disciplinas}}
         <button type="submit" class="btn btn-success">Salvar</button>
         <button type="reset" class="btn btn-default">Limpar</button>
       </form>

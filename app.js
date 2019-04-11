@@ -15,6 +15,7 @@ require('./mysql');
 
 // Carrega as rotas
 const livroRoute = require('./src/routes/livro-route');
+const disciplinaRoute = require('./src/routes/disciplina-route');
 
 app.use(bodyParser.json({
     limit: '5mb'
@@ -32,6 +33,7 @@ app.use(function (req, res, next) {
 });
 const _PATH_ = '/API';
 app.use(_PATH_ + '/livros', livroRoute);
+app.use(_PATH_ + '/disciplina', disciplinaRoute);
 
 /*
  * Porta do servidor
