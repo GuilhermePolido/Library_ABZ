@@ -13,6 +13,9 @@ app.use(express.static('public'))
 
 require('./mysql');
 
+const { User } = require('./app/models');
+User.create({ name: 'Claudio', email: 'claudio@rocketseat.com.br', password: '123456' });
+
 // Carrega as rotas
 const livroRoute = require('./src/routes/livro-route');
 
