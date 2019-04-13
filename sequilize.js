@@ -1,9 +1,28 @@
 const { Livro } = require('./app/models');
-console.log(Livro);
+
 
 /*
-Livro.findAll().then(project => {
-    // project will be the first entry of the Projects table with the title 'aProject' || null
-    // project.get('title') will contain the name of the project
-  })
-  */
+Livro.findAll({
+  attributes: ['CD_LIVRO', 'DS_TITULO']
+}).then(result => {
+  result.map((livro) => {
+    console.log(livro.dataValues)
+  })  
+})
+*/
+
+const Sequelize = require('sequelize');
+const Op = Sequelize.Op
+
+var qry = {
+  cd_livro: {
+    [Op.or]: [2, 3]
+  }
+}
+
+Livro.findAll({
+  attributes: ['cd_livro', 'ds_titulo'],
+  where: qry
+}).then(r => {
+  console.log(r.map(e => e.dataValues))
+})

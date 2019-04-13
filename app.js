@@ -11,11 +11,13 @@ app.get('/', (req, res)=>{
 })
 app.use(express.static('public'))
 
+require('./config/config');
 require('./mysql');
 require('./sequilize');
 
 // Carrega as rotas
 const livroRoute = require('./src/routes/livro-route');
+const usuarioRoute = require('./src/routes/usuario-route');
 
 app.use(bodyParser.json({
     limit: '5mb'
@@ -31,8 +33,10 @@ app.use(function (req, res, next) {
     res.header('Access-Control-Allow-Methods', 'GET, POST, PUT, DELETE, OPTIONS');
     next();
 });
+
 const _PATH_ = '/API';
 app.use(_PATH_ + '/livros', livroRoute);
+app.use(_PATH_ + '/usuarios', usuarioRoute);
 
 /*
  * Porta do servidor

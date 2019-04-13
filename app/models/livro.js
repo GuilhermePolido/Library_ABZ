@@ -2,6 +2,9 @@
 
 module.exports = function(sequelize, DataTypes) {
 	return sequelize.define('Livro', {
+		timestamps: false,
+		createdAt: false,
+		updatedAt: false,
 		CD_LIVRO: {
 			type: DataTypes.INTEGER(11),
 			allowNull: false,

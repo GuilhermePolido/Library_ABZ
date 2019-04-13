@@ -15,16 +15,3 @@ db.connect(function(err){
     console.log('Banco de Dados concectado com sucesso!')
   }
 })
-
-// Sequelize
-
-const sequelize = new Sequelize('mydb', 'root', '', {
-  host: 'localhost',
-  dialect: 'mysql', 
-  // To create a pool of connections
-  pool: {
-    max: 5,
-    min: 0,
-    idle: 10000
-  }
-});
