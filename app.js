@@ -11,7 +11,7 @@ app.get('/', (req, res)=>{
 })
 app.use(express.static('public'))
 
-require('./mysql');
+//require('./mysql');
 
 // Carrega as rotas
 const livroRoute = require('./src/routes/livro-route');
