@@ -1,4 +1,5 @@
 const mysql = require('mysql');
+const Sequelize = require('sequelize');
 
 global.db = mysql.createConnection({
   host     : 'localhost',
@@ -9,8 +10,8 @@ global.db = mysql.createConnection({
 
 db.connect(function(err){
   if(err) {
-    console.log()
+    console.log(err)
+  } else {
+    console.log('Banco de Dados concectado com sucesso!')
   }
 })
-
-/** Testa a conexão fazendo esse SELECT */

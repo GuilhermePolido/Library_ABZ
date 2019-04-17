@@ -22,14 +22,13 @@ exports.getById = async(req, res, next) => {
     }
 }
 
-
 exports.post = async(req, res, next) => {
     try {
         await repository.create(req.body);
         res.status(200).send('Livro cadastrado com sucesso!');
     } catch(e) {
         res.status(500).send({
-            message: 'Falha ao cadastrar livro'
+            message: 'Falha ao cadastrar livro. '+e
         });
     }
 }

@@ -2,7 +2,7 @@
 (function () {
     angular.module('LIBABZ')
             .controller('newLivroController', function (
-                $scope, $location, $http, $log, $httpParamSerializer, $timeout, $rootScope
+                $scope, $location, $http, $cookies, $log, $httpParamSerializer, $timeout, $rootScope
                 ) {
                     const path = '/api/livros'
                     let lv = this;
@@ -24,7 +24,8 @@
                         $http({
                             method: 'POST',
                             url: path,
-                            data: data
+                            data: data,
+                            headers: {'x-access-token': $cookies.get('token')}
                         }).then(function succesCallBack(response) {
                             lv.limpar();
                             lv.salvando = false;
