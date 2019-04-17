@@ -16,5 +16,9 @@
                         console.log(lg.userName);
                         console.log(lg.password);
                     }
+
+                    lg.login = () => {
+                        console.log(lg.userName);                        
+                    }
     });
 })();
