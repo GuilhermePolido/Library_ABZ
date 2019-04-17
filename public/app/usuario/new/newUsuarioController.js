@@ -4,17 +4,17 @@
             .controller('newUsuarioController', function (
                 $scope, $location, $http, $log, $httpParamSerializer, $timeout, $rootScope
                 ) {
-                    const path = '/api/usuario'
+                    const path = '/api/usuarios/'
                     let user = this;
-                    user.titulo = '';
-                    user.autor = '';
-                    user.editor = '';
-                    user.numPag = '';
-                    user.classific = '';
-                    user.sumario = '';
-                    user.estante = ''; //Pegar estante do professor logado
-                    user.status = '0';
+                    user.usuario = '';
+                    user.email = '';
+                    user.senha = '';
+                    user.senha2 = '';
+                    user.nome = '';
+                    user.telefone = '';
                     user.error = [];
+                    user.success = [];
+
                     user.salvando = false;
 
                     user.enviar = () => {
@@ -27,6 +27,7 @@
                             data: data
                         }).then(function succesCallBack(response) {
                             user.limpar();
+                            user.success.push(response.data);
                             user.salvando = false;
                         }, function errorCallBack(response) {
                             user.error.push(response['data'].message);
@@ -35,25 +36,22 @@
                     }
 
                     user.limpar = () => {
-                        user.titulo = '';
-                        user.autor = '';
-                        user.editor = '';
-                        user.numPag = '';
-                        user.classific = '';
-                        user.sumario = '';
+                        user.usuario = '';
+                        user.email = '';
+                        user.senha = '';
+                        user.senha2 = '';
+                        user.nome = '';
+                        user.telefone = '';
                         user.error = [];
                     }
 
                     user.prepararData = () => {
                         return {
-                            "CD_ESTANTE": 1,
-                            "DS_SUMARIO": user.sumario,
-                            "DS_TITULO": user.titulo,
-                            "NM_AUTOR": user.autor,
-                            "NM_EDITOR": user.editor,
-                            "NR_CLASSIFICACAO": user.classific,
-                            "NR_PAGINA": user.numPag,
-                            ST_LIVRO: user.status
+                            "CD_USUARIO": user.usuario,
+                            "DS_EMAIL": user.email,
+                            "ds_senha": user.senha,
+                            "NM_USUARIO": user.nome,
+                            "NR_TELEFONE": user.telefone
                         };
                     }
     });

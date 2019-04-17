@@ -1,14 +1,19 @@
 <div class="container" ng-controller="newUsuarioController as us">
-  <div class="alert alert-danger" role="alert" ng-show="us.error">
+  <div class="alert alert-danger" role="alert" ng-show="us.error.length > 0">
       <ul>
         <li ng-repeat="erro in us.error">{{erro}}</li>
+      </ul>
+  </div>
+  <div class="alert alert-success" role="alert" ng-show="us.success.length > 0">
+      <ul>
+        <li ng-repeat="success in us.success">{{success}}</li>
       </ul>
   </div>
   <h3>Cadastro de Usuário</h3>
   <form ng-submit="us.enviar()">
       <div class="form-group">
         <label for="usuario">Usuário</label>
-        <input type="text" required class="form-control" name="usuario" ng-model="us.nm_usuario" id="usuario" placeholder="Usuário">
+        <input type="text" required class="form-control" name="usuario" ng-model="us.usuario" id="usuario" placeholder="Usuário">
 
         <label for="email">E-mail</label>
         <input type="text" required class="form-control" name="email" ng-model="us.email" id="email" 
@@ -19,6 +24,7 @@
 
         <label for="senha2">Senha</label>
         <input type="text" class="form-control" name="senha2" ng-model="us.senha2" id="senha2" placeholder="Confirmar senha">
+        <p class="text-danger" ng-show="(us.senha && us.senha2) && us.senha != us.senha2">Senhas não conferem</p>
 
         <label for="nomecompleto">Nome completo</label>
         <input type="text" class="form-control" name="nome" ng-model="us.nome" id="noem" placeholder="Nome completo">
