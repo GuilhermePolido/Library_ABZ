@@ -17,14 +17,14 @@
     <script type="text/javascript" src="./libs/js/ui-bootstrap-tpls-1.3.2.min.js"></script>
     <script src="./app/app.module.js" charset="utf-8" type="text/javascript"></script>
     <script src="./app/app.routes.js" charset="utf-8" type="text/javascript"></script>
-    <script src="./app/login/loginController.js" charset="utf-8" type="text/javascript"></script>
+    <script src="./app/usuario/login/loginController.js" charset="utf-8" type="text/javascript"></script>
     <script src="./app/livro/list/listLivroController.js" charset="utf-8" type="text/javascript"></script>
     <script src="./app/livro/new/newLivroController.js" charset="utf-8" type="text/javascript"></script>
     <script src="./app/home/homeController.js" charset="utf-8" type="text/javascript"></script>
 
     <link rel="stylesheet" type="text/css" href="./libs/css/bootstrap.min.css" />
     <link rel="stylesheet" type="text/css" href="./libs/fontawesome-free-5.8.1-web/css/all.css" />
-    <link rel="stylesheet" type="text/css" href="./app/login/login.css" />
+    <link rel="stylesheet" type="text/css" href="./app/usuario/login.css" />
     <link rel="stylesheet" type="text/css" href="./app/livro/livro.css" />
     <link rel="stylesheet" type="text/css" href="./app/home/home.css" />
 </head>
@@ -47,7 +47,13 @@
                     <li><a href="#/livros">Livros</a></li>
                     <li><a href="#/livros/new">Cadastrar Livros</a></li>
                 </ul>
-                <ul class="nav navbar-nav navbar-right">
+                <ul class="nav navbar-nav navbar-right" ng-show="mostrarUser">
+                    <li><a href="#">Logout</a></li>
+                    <li><a href="#">Editar Perfil <i class="fa fa-user-circle"></i></a></li>
+                </ul>
+                <ul class="nav navbar-nav navbar-right" ng-show="!mostrarUser">
+                    <li><a href="#/usuario/new">Cadastrar</a></li>
+                    <li><a href="#/usuario/login">Login</a></li>
                 </ul>
             </div>
         </div>
@@ -55,4 +61,5 @@
     <div class="container" ng-view>
     </div>
 </body>
+
 </html>

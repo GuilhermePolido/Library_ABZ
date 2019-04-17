@@ -1,4 +1,5 @@
 <div class="container" ng-controller="listLivroController as lv">
+  {{labelTitulo}}
   <div class="panel panel-default">
     <div class="row" style="margin: 10px;">
       <div class="panel-heading">
@@ -20,9 +21,6 @@
           <td>{{livro.CD_ESTANTE}}</td>
         </tr>
       </table>
-      <div ng-show="lv.livros.length == 0">
-        Não Existem Livros cadastrados
-      </div>
     </div>
   </div>
 </div>
