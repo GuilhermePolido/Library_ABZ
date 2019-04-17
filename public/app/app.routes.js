@@ -5,6 +5,9 @@
                 .when('/', {
                     templateUrl: CONFIG.PATH + 'home/home.html'
                 })
+                .when('/login', {
+                    templateUrl: CONFIG.PATH + 'login/login.html'
+                })
                 .when('/livros', {
                     templateUrl: CONFIG.PATH + 'livro/list/listLivros.html'
                 })
