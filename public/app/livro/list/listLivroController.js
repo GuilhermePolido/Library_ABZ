@@ -9,9 +9,7 @@
                     lv.livros = null;
                     lv.error = false;
                     lv.loading = true;
-
-                    $cookies.put('token', 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJlbWFpbCI6Imd1aWxoZXJtZXBvbGlkb0BnbWFpbC5jb20iLCJuYW1lIjoiR3VpbGhlcm1lIiwiaWF0IjoxNTU1NDU5MzQzLCJleHAiOjE1NTU1NDU3NDN9._9uXkGJFWBn0hPizgEBaWUu2TcP7lFuv9sYIucv45Aw');
-
+                    
                     $http({
                         method: 'GET',
                         url: path,
