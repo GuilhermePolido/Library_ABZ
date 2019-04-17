@@ -23,6 +23,18 @@
                 .when('/livros/emprestimo/:id', {
                     templateUrl: CONFIG.PATH + 'livro/emprestimo/emprestimo.html'
                 })
+                .when('/livros/devolucao', {
+                    templateUrl: CONFIG.PATH + 'livro/devolucao/devolucao.html'
+                })
+                .when('/livros/devolucao/:id', {
+                    templateUrl: CONFIG.PATH + 'livro/devolucao/devolucao.html'
+                })
+                .when('/usuario/new', {
+                    templateUrl: CONFIG.PATH + 'usuario/new/newUsuario.html'
+                })
+                .when('/usuario/login', {
+                    templateUrl: CONFIG.PATH + 'usuario/login/login.html'
+                })
                 .otherwise({redirectTo: '/'});
 
         // $sceDelegateProvider.resourceUrlWhitelist([

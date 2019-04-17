@@ -1,0 +1,1 @@
+global.SALT_KEY = 'tMr5HgRILa7Wumrk5jXn3OEoJV5o5sTR';
