@@ -11,6 +11,12 @@
                 .when('/livros/new', {
                     templateUrl: CONFIG.PATH + 'livro/new/newLivro.html'
                 })
+                .when('/livros/devolucao', {
+                    templateUrl: CONFIG.PATH + 'livro/devolucao/devolucao.html'
+                })
+                .when('/livros/devolucao/:id', {
+                    templateUrl: CONFIG.PATH + 'livro/devolucao/devolucao.html'
+                })
                 .otherwise({redirectTo: '/'});
 
         // $sceDelegateProvider.resourceUrlWhitelist([

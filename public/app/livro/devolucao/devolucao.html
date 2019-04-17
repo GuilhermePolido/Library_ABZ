@@ -1,0 +1,22 @@
+<div class="container" ng-controller="devolucaoController as lv">
+    <div class="alert alert-danger" role="alert" ng-show="lv.error.length > 0">
+        <ul>
+          <li ng-repeat="erro in lv.error">{{erro}}</li>
+        </ul>
+    </div>
+    <h3>Devolver livro</h3>
+    <form ng-submit="lv.enviar()">
+        <div class="form-group">
+          <label for="dataDevolucao">Data da Devolução</label>
+          <p class="input-group">
+          <input type="text" class="form-control" uib-datepicker-popup="dd/MM/yyyy" ui-mask="99/99/9999" model-view-value="true" uib-tooltip="Escolha a data do filtro, você pode utilizar o calendário para escolher uma data." tooltip-placement="bottom" ng-model="filter.valorFiltro" is-open="popup.opened" datepicker-options="dateOptions" ng-required="true" close-text="Fechar" clear-text="Limpar" current-text="Hoje" alt-input-formats="altInputFormats" />
+          <span class="input-group-btn">
+            <button type="button" class="btn btn-default" ng-click="openCalendar()"><i class="fas fa-calendar-alt"></i></button>
+          </span>
+          </p>
+
+        </div>
+        <button type="submit" class="btn btn-success">Salvar</button>
+        <button type="reset" class="btn btn-default">Limpar</button>
+      </form>
+</div>
