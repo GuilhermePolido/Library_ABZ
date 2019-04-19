@@ -57,4 +57,4 @@ exports.delete = async(req, res, next) => {
             message: 'Falha ao remover livro'
         });
     }
-};
+}

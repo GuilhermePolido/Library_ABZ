@@ -3,6 +3,10 @@ const app = require('express')()
 const bodyParser = require('body-parser');
 const http = require('http').createServer(app)
 
+require('./config/config');
+require('./mysql');
+require('./sequilize');
+
 /**
  * @Express Server
  */
@@ -10,14 +14,6 @@ app.get('/', (req, res)=>{
 	res.sendFile(__dirname+'/public/index.html')
 })
 app.use(express.static('public'))
-
-require('./config/config');
-require('./mysql');
-require('./sequilize');
-
-// Carrega as rotas
-const livroRoute = require('./src/routes/livro-route');
-const usuarioRoute = require('./src/routes/usuario-route');
 
 app.use(bodyParser.json({
     limit: '5mb'
@@ -34,9 +30,14 @@ app.use(function (req, res, next) {
     next();
 });
 
-const _PATH_ = '/API';
-app.use(_PATH_ + '/livros', livroRoute);
-app.use(_PATH_ + '/usuarios', usuarioRoute);
+// Carrega as rotas
+const livroRoute = require('./src/routes/livro-route');
+const usuarioRoute = require('./src/routes/usuario-route');
+const estanteRoute = require('./src/routes/estante-route');
+
+app.use('/API/livros', livroRoute);
+app.use('/API/usuarios', usuarioRoute);
+app.use('/API/estante', estanteRoute);
 
 /*
  * Porta do servidor
