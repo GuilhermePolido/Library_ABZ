@@ -42,8 +42,14 @@ exports.post = async (req, res, next) => {
 }
 
 exports.delete = async (req, res, next) => {
-    try {                
-        await repository.delete(req.body.cd_estante)
+    try {
+        // Recupera o token
+        var token = req.body.token || req.query.token || req.headers['x-access-token'];
+
+        // Decodifica o token
+        var data = await authService.decodeToken(token);
+        
+        await repository.delete(data.user);
         res.status(200).send({
             message: 'Estante removida com sucesso!'
         });
