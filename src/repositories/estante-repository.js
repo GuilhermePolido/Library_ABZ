@@ -17,6 +17,15 @@ exports.get = async() => {
     })
 }
 
+exports.getEstanteAtual = async(id) => {
+    return new Promise((resolve, reject) => {
+        db.query('SELECT * FROM estante WHERE cd_administrador = ?', id, function (err, results, fields) {
+            if(err) reject();
+            resolve(results);
+        })
+    })
+}
+
 exports.delete = async(id) => {
     return new Promise((resolve, reject) => {
         db.query('DELETE FROM estante WHERE cd_estante = ?', id, (err, results, fields) => {
