@@ -1,0 +1,19 @@
+.listaLivros td {
+    max-width: 150px;
+    word-break: break-all;
+}
+
+.panel-heading {
+    display: flex;
+}
+
+.panel-heading.principal {
+    display: flex;
+    justify-content: center;
+}
+
+.panel-heading .title {
+    display: flex;
+    flex-grow: 1;
+    justify-content: center;
+}
