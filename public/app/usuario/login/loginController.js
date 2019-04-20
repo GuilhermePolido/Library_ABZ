@@ -20,12 +20,18 @@
                             data: data
                         }).then(function succesCallBack(response) {
                             console.log(response);
+                            $rootScope.mostrarUser = true;
+                            $rootScope.user = response['data'];
                             $cookies.put('token', response['data'].token);
                             $cookies.put('email', response['data'].data.email);
                             $cookies.put('name', response['data'].data.name);
                             lg.limpar();
                             lg.logando = false;
+                            $location.path('#/');
+                            $location.replace();
                         }, function errorCallBack(response) {
+                            $rootScope.mostrarUser = false;
+                            $rootScope.user = null;
                             $cookies.remove('token');
                             $cookies.remove('email');
                             $cookies.remove('name');

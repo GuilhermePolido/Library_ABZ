@@ -46,15 +46,16 @@
                         <span class="icon-bar"></span>
                         <span class="icon-bar"></span>
                     </button>
-                    <a class="navbar-brand" href="#/">Biblioteca ABZ</a>
+                    <a class="navbar-brand" href="#/" ng-show="mostrarUser">Biblioteca ABZ</a>
+                    <a class="navbar-brand" href="#/usuario/login" ng-show="!mostrarUser">Biblioteca ABZ</a>
                 </div>
                 <div class="collapse navbar-collapse" id="bs-example-navbar-collapse-1">
-                    <ul class="nav navbar-nav">
+                    <ul class="nav navbar-nav" ng-show="mostrarUser">
                         <li><a href="#/livros">Livros</a></li>
                         <li><a href="#/livros/new">Cadastrar Livros</a></li>
                     </ul>
                     <ul class="nav navbar-nav navbar-right" ng-show="mostrarUser">
-                        <li><a href="#">Logout</a></li>
+                        <li><a ng-click="ic.logout()" href="#/usuario/login">Logout</a></li>
                         <li><a href="#">Editar Perfil <i class="fa fa-user-circle"></i></a></li>
                     </ul>
                     <ul class="nav navbar-nav navbar-right" ng-show="!mostrarUser">
@@ -64,6 +65,7 @@
                 </div>
             </div>
         </nav>
+        {{ic.isLogged}}
     </div>
     <div class="container" ng-view>
     </div>
