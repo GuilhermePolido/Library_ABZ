@@ -1,3 +1,5 @@
+const { Livro } = require('../../app/models');
+
 exports.create = async(livro) => {
     return new Promise((resolve, reject) => {
         db.query('INSERT INTO livro SET ?', livro, (err, results, fields) => {
@@ -6,6 +8,15 @@ exports.create = async(livro) => {
         })
     })
 }
+
+/*
+exports.create = async(livro) => {
+    return Livro.query('INSERT INTO LIVRO SET ?', {
+        raw: true, 
+        replacements: [livro]
+    });
+}
+*/
 
 exports.get = async() => {
     return new Promise((resolve, reject) => {
