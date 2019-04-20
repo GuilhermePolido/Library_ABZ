@@ -4,6 +4,7 @@
             .controller('loginController', function (
                 $scope, $location, $http, $cookies, $log, $httpParamSerializer, $timeout, $rootScope
                 ) {
+                    $rootScope.doLogin = true;
                     const path = '/api/usuarios/login'
                     let lg = this;
                     lg.logando = false;
@@ -21,7 +22,8 @@
                         }).then(function succesCallBack(response) {
                             console.log(response);
                             $rootScope.mostrarUser = true;
-                            $rootScope.user = response['data'];
+                            $rootScope.user.email = response['data'].data.email;
+                            $rootScope.user.name = response['data'].data.name;
                             $cookies.put('token', response['data'].token);
                             $cookies.put('email', response['data'].data.email);
                             $cookies.put('name', response['data'].data.name);
@@ -52,6 +54,9 @@
                         };
                     }
 
+                    lg.criar = () => {
+                        $rootScope.doLogin = false;
+                    }
 
     });
 })();

@@ -5,9 +5,6 @@
                 .when('/', {
                     templateUrl: CONFIG.PATH + 'home/home.html'
                 })
-                .when('/login', {
-                    templateUrl: CONFIG.PATH + 'login/login.html'
-                })
                 .when('/livros', {
                     templateUrl: CONFIG.PATH + 'livro/list/listLivros.html'
                 })
@@ -31,9 +28,6 @@
                 })
                 .when('/livros/devolucao/:id', {
                     templateUrl: CONFIG.PATH + 'livro/devolucao/devolucao.html'
-                })
-                .when('/usuario/new', {
-                    templateUrl: CONFIG.PATH + 'usuario/new/newUsuario.html'
                 })
                 .when('/usuario/login', {
                     templateUrl: CONFIG.PATH + 'usuario/login/login.html'
