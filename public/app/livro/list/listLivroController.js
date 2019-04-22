@@ -4,7 +4,8 @@
             .controller('listLivroController', function (
                 $scope, $location, $http, $window, $log, $httpParamSerializer, $timeout, $rootScope, $cookies
                 ) {
-                    const path = '/api/livros'
+                    const path = '/api/estante/atual'
+                    
                     let lv = this;
                     lv.livros = null;
                     lv.error = false;

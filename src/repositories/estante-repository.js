@@ -19,7 +19,7 @@ exports.get = async () => {
 
 exports.getEstanteAtual = async (id) => {
     return new Promise((resolve, reject) => {
-        db.query('SELECT * FROM estante WHERE cd_administrador = ?', id, function (err, results, fields) {
+        db.query('SELECT * FROM estante, livro WHERE estante.cd_administrador = ? AND livro.cd_estante = estante.cd_estante', id, function (err, results, fields) {
             if (err) reject();
             resolve(results);
         })
