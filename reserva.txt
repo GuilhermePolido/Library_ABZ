@@ -1,0 +1,6 @@
+Um empréstimo e reserva duram 1 semana
+
+Só pode emprestar/renovar se não tiver resrva
+
+Se tiver reserva, vai pra pessoa que reservou
+
