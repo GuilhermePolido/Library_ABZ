@@ -4,3 +4,30 @@ Só pode emprestar/renovar se não tiver resrva
 
 Se tiver reserva, vai pra pessoa que reservou
 
+--- empréstimo
+
+create: precisa estar autenticado. Recebe o emprestimo, pega a data atual como dt_emprestimo e dt_revolução = dt_emprestimo + 7 dias
+        alterar o status do livro para emprestado
+
+
+--- devolução
+
+create: precisa estar autenticado.
+    campos:
+    cd_emprestimo: select * from emprestimo where cd_livro = ? and dt_devolução is null
+    dt_devolução: sysdate
+    setar dt_devolucao da tabela emprestimo para sysdate
+
+-- Filtros
+
+filtro de livro por nome e disciplina
+
+-- disciplina x livro
+
+editar o create de livro pra poder escolher as disciplinas
+
+filtro por disciplina:
+
+select * from disciplina_livro where cd_disciplina = ? 
+
+select * from disciplina_livro where cd_livro = ?
