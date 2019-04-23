@@ -4,8 +4,9 @@
             .controller('listLivroController', function (
                 $scope, $location, $http, $window, $log, $httpParamSerializer, $timeout, $rootScope, $cookies
                 ) {
-                    const path = '/api/estante/atual'
-                    
+                    const path = '/api/estante/atual';
+                    const pathAllLivros = '/api/livros';
+
                     let lv = this;
                     lv.livros = null;
                     lv.error = false;
@@ -28,6 +29,16 @@
                         lv.loading = false;
                     });
 
+                    $http({
+                        method: 'GET',
+                        url: pathAllLivros,
+                        headers: {'x-access-token': $cookies.get('token')}
+                    }).then(function succesCallBack(response) {
+                        lv.allLivros = response['data'];
+                    }, function errorCallBack(response) {
+                        lv.allLivros = [];
+                    });
+
                     lv.open = (livro) => {
                         console.log(livro);
                         lv.screen = 1;
@@ -48,6 +59,21 @@
                     lv.back = () => {
                         lv.screen = 0;
                         lv.livro = null;
+                    }
+
+                    lv.emprestar = (livro) => {
+                        lv.screen = 5;
+                        lv.livro = livro;
+                    }
+
+                    lv.reservar = (livro) => {
+                        lv.screen = 4;
+                        lv.livro = livro;
+                    }
+
+                    lv.devolver = (livro) => {
+                        lv.screen = 6;
+                        lv.livro = livro;
                     }
     });
 })();

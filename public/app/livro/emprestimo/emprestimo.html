@@ -1,15 +1,15 @@
 <div class="container" ng-controller="emprestimoController as lv">
-    <div class="alert alert-danger" role="alert" ng-show="lv.error.length > 0">
+    <div class="alert alert-danger" role="alert" ng-show="ec.error.length > 0">
         <ul>
-          <li ng-repeat="erro in lv.error">{{erro}}</li>
+          <li ng-repeat="erro in ec.error">{{erro}}</li>
         </ul>
     </div>
-    <h3>Cadastro de Livros</h3>
-    <form ng-submit="lv.enviar()">
+    <h3>Emprestimo de Livros</h3>
+    <form ng-submit="ec.enviar()">
         <div class="form-group">
             <label for="dataEmprestimo">Data Emprestimo</label>
             <p class="input-group">
-              <input type="text" class="form-control" uib-datepicker-popup="dd/MM/yyyy" ui-mask="99/99/9999" model-view-value="true" uib-tooltip="Escolha a data." tooltip-placement="bottom" ng-model="lv.dataEmprestimo" is-open="popup1.opened" datepicker-options="dateOptions" ng-required="true" close-text="Fechar" clear-text="Limpar" current-text="Hoje" alt-input-formats="altInputFormats" />
+              <input type="text" class="form-control" uib-datepicker-popup="dd/MM/yyyy" ui-mask="99/99/9999" model-view-value="true" uib-tooltip="Escolha a data." tooltip-placement="bottom" ng-model="ec.dataEmprestimo" is-open="popup1.opened" datepicker-options="dateOptions" ng-required="true" close-text="Fechar" clear-text="Limpar" current-text="Hoje" alt-input-formats="altInputFormats" />
               <span class="input-group-btn">
                 <button type="button" class="btn btn-default" ng-click="openCalendar1()"><i class="fas fa-calendar-alt"></i></button>
               </span>
@@ -17,7 +17,7 @@
 
           <label for="dataDevolucao">Data Devolução</label>
           <p class="input-group">
-            <input type="text" class="form-control" uib-datepicker-popup="dd/MM/yyyy" ui-mask="99/99/9999" model-view-value="true" uib-tooltip="Escolha a data." tooltip-placement="bottom" ng-model="lv.dataDevolucao" is-open="popup2.opened" datepicker-options="dateOptions" ng-required="true" close-text="Fechar" clear-text="Limpar" current-text="Hoje" alt-input-formats="altInputFormats" />
+            <input type="text" class="form-control" uib-datepicker-popup="dd/MM/yyyy" ui-mask="99/99/9999" model-view-value="true" uib-tooltip="Escolha a data." tooltip-placement="bottom" ng-model="ec.dataDevolucao" is-open="popup2.opened" datepicker-options="dateOptions" ng-required="true" close-text="Fechar" clear-text="Limpar" current-text="Hoje" alt-input-formats="altInputFormats" />
             <span class="input-group-btn">
               <button type="button" class="btn btn-default" ng-click="openCalendar2()"><i class="fas fa-calendar-alt"></i></button>
             </span>

@@ -4,7 +4,7 @@
         .controller('emprestimoController', function (
             $scope, $location, $http, $log, $httpParamSerializer, $timeout, $rootScope, $routeParams
             ) {
-                const path = '/api/livros'
+                const path = '/api/livros';
                 const params = $routeParams;
                 let lv = this;
                 lv.livroId = params.id;
