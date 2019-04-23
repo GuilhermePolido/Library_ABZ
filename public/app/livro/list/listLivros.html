@@ -41,11 +41,59 @@
           <button class="btn btn-default btn-sm" ng-click="lv.back()">Voltar</button>
         </div>
         <div class="title">
-          <strong>Detalhes do Livro</strong>
+          <strong>Detalhes do Livro: {{lv.livro.DS_TITULO}}</strong>
         </div>
       </div>
-      <div class="panel-body" ng-show="lv.livro">
-        {{lv.livro}}
+      <div class="row" ng-show="lv.livro">
+        <div>
+          <div class="col-md-2"><ul class="list-group"><li class="list-group-item">Status</li></ul></div>
+          <div class="col-md-10"><ul class="list-group"><li class="list-group-item">{{lv.livro.ST_LIVRO}}</li></ul></div>
+        </div>
+        
+        <div>
+          <div class="col-md-2"><ul class="list-group"><li class="list-group-item">Código Estante</li></ul></div>
+          <div class="col-md-10"><ul class="list-group"><li class="list-group-item">{{lv.livro.CD_ESTANTE}}</li></ul></div>
+        </div>
+        
+        <div>
+          <div class="col-md-2"><ul class="list-group"><li class="list-group-item">Código Livro</li></ul></div>
+          <div class="col-md-10"><ul class="list-group"><li class="list-group-item">{{lv.livro.CD_LIVRO}}</li></ul></div>
+        </div>
+
+        <div>
+          <div class="col-md-2"><ul class="list-group"><li class="list-group-item">Dono</li></ul></div>
+          <div class="col-md-10"><ul class="list-group"><li class="list-group-item">{{lv.livro.CD_ADMINISTRADOR ? lv.livro.CD_ADMINISTRADOR : '-'}}</li></ul></div>
+        </div>
+
+        <div>
+          <div class="col-md-2"><ul class="list-group"><li class="list-group-item">Autor</li></ul></div>
+          <div class="col-md-10"><ul class="list-group"><li class="list-group-item">{{lv.livro.NM_AUTOR ? lv.livro.NM_AUTOR : '-'}}</li></ul></div>
+        </div>
+
+        <div>
+          <div class="col-md-2"><ul class="list-group"><li class="list-group-item">Editora</li></ul></div>
+          <div class="col-md-10"><ul class="list-group"><li class="list-group-item">{{lv.livro.NM_EDITOR ? lv.livro.NM_EDITOR : '-'}}</li></ul></div>
+        </div>
+
+        <div>
+          <div class="col-md-2"><ul class="list-group"><li class="list-group-item">Número de Páginas</li></ul></div>
+          <div class="col-md-10"><ul class="list-group"><li class="list-group-item">{{lv.livro.NR_PAGINA ? lv.livro.NR_PAGINA : '-'}}</li></ul></div>
+        </div>
+
+        <div>
+          <div class="col-md-2"><ul class="list-group"><li class="list-group-item">Classificação</li></ul></div>
+          <div class="col-md-10"><ul class="list-group"><li class="list-group-item">{{lv.livro.NR_CLASSIFICACAO ? lv.livro.NR_CLASSIFICACAO : '-'}}</li></ul></div>
+        </div>
+
+        <div>
+          <div class="col-md-2"><ul class="list-group"><li class="list-group-item">Sumário</li></ul></div>
+          <div class="col-md-10"><ul class="list-group"><li  class="list-group-item">{{lv.livro.DS_SUMARIO ? lv.livro.DS_SUMARIO : '-'}}</li></ul></div>
+        </div>
+
+        <div>
+          <div class="col-md-2"><ul class="list-group"><li class="list-group-item">Última Alteração</li></ul></div>
+          <div class="col-md-10"><ul class="list-group"><li class="list-group-item">{{lv.livro.DT_MANUTENCAO ? lv.livro.DT_MANUTENCAO : '-'}}</li></ul></div>
+        </div>
       </div>
     </div>
   </div>
