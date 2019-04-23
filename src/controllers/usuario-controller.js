@@ -1,4 +1,5 @@
 const repository = require('../repositories/usuario-repository');
+const repositoryEstante = require('../repositories/estante-repository');
 const authService = require('../services/auth-service');
 const md5 = require('md5');
 
@@ -20,6 +21,8 @@ exports.post = async (req, res, next) => {
 
         // Cadastra o usuário
         await repository.create(req.body);
+        await repositoryEstante.create({"CD_ADMINISTRADOR": req.body.CD_USUARIO});
+
         res.status(200).send('Usuário cadastrado com sucesso!');
     } catch (e) {
         res.status(500).send({

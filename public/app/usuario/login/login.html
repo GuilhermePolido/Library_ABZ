@@ -1,30 +1,77 @@
+<div class="container" ng-controller="newUsuarioController as us">
+  <div class="alert alert-success" role="alert" ng-show="us.success.length > 0">
+    <ul>
+      <li ng-repeat="success in us.success">{{success}}</li>
+    </ul>
+  </div>
+  <div ng-show="!doLogin">
+    <div class="alert alert-danger" role="alert" ng-show="us.error.length > 0">
+      <ul>
+        <li ng-repeat="erro in us.error">{{erro}}</li>
+      </ul>
+    </div>
+    <h3>Cadastro de Usuário</h3>
+    <form ng-submit="us.enviar()">
+      <div class="form-group">
+        <label for="usuario">Usuário</label>
+        <input type="text" required class="form-control" name="usuario" ng-model="us.usuario" id="usuario"
+          placeholder="Usuário">
+
+        <label for="email">E-mail</label>
+        <input type="text" required class="form-control" name="email" ng-model="us.email" id="email"
+          placeholder="E-mail">
+
+        <label for="senha">Senha</label>
+        <input type="password" class="form-control" name="senha" ng-model="us.senha" id="senha" placeholder="Senha">
+
+        <label for="senha2">Senha</label>
+        <input type="password" class="form-control" name="senha2" ng-model="us.senha2" id="senha2"
+          placeholder="Confirmar senha">
+        <p class="text-danger" ng-show="(us.senha && us.senha2) && us.senha != us.senha2">Senhas não conferem</p>
+
+        <label for="nomecompleto">Nome completo</label>
+        <input type="text" class="form-control" name="nome" ng-model="us.nome" id="noem" placeholder="Nome completo">
+
+        <label for="telefone">Telefone</label>
+        <input type="text" class="form-control" name="telefone" ng-model="us.telefone" id="classific"
+          placeholder="Telefone">
+      </div>
+      <button type="submit" class="btn btn-success">Salvar</button>
+      <button type="reset" class="btn btn-default">Limpar</button>
+    </form>
+  </div>
+</div>
 <div class="container ng-scope" ng-controller="loginController as lg">
-    <div class="row vertical-offset-100" id="rowLogin">
-      <div class="col-md-4 col-md-offset-4">
-        <div class="panel panel-default">
-          <div class="panel-heading">
-            <h3 class="panel-title">Por favor, inscreva-se</h3>
-          </div>
-          <div class="panel-body">
-            <form accept-charset="UTF-8" role="form" class="ng-pristine ng-valid"  ng-submit="lg.login()">
-              <div class="alert alert-info ng-binding" role="alert">Insira suas credenciais para logar</div>
-              <fieldset>
-                <div class="form-group">
-                  <input class="form-control ng-pristine ng-untouched ng-valid ng-empty" required placeholder="E-mail" ng-model="lg.userName" name="email" type="text">
-                </div>
-                <div class="form-group">
-                  <input class="form-control ng-pristine ng-untouched ng-valid ng-empty" required placeholder="Password" ng-model="lg.password" name="password" type="password" value="">
-                </div>
-                <div class="checkbox">
-                  <label>
-                    <input name="remember" type="checkbox" value="Remember Me">Continuar conectado
-                  </label>
-                </div>
-                <input class="btn btn-lg btn-success btn-block" type="submit" value="Login">
-              </fieldset>
-            </form>
-          </div>
+  <div class="row vertical-offset-100" id="rowLogin" ng-show="doLogin">
+    <div class="col-md-4 col-md-offset-4">
+      <div class="panel panel-default">
+        <div class="panel-heading">
+          <h3 class="panel-title">Por favor, faça login</h3>
+        </div>
+        <div class="panel-body">
+          <form accept-charset="UTF-8" role="form" class="ng-pristine ng-valid" ng-submit="lg.login()">
+            <div class="alert alert-info ng-binding" role="alert">Insira suas credenciais para logar</div>
+            <fieldset>
+              <div class="form-group">
+                <input class="form-control ng-pristine ng-untouched ng-valid ng-empty" required placeholder="E-mail"
+                  ng-model="lg.userName" name="email" type="text">
+              </div>
+              <div class="form-group">
+                <input class="form-control ng-pristine ng-untouched ng-valid ng-empty" required placeholder="Password"
+                  ng-model="lg.password" name="password" type="password" value="">
+              </div>
+              <div class="checkbox">
+                <label>
+                  <input name="remember" type="checkbox" value="Remember Me">Continuar conectado
+                </label>
+              </div>
+              <input class="btn btn-lg btn-success btn-block" type="submit" value="Login">
+              <input class="btn btn-lg btn-default btn-sm btn-block" type="button" value="Criar Conta"
+                ng-click="lg.criar()">
+            </fieldset>
+          </form>
         </div>
       </div>
     </div>
   </div>
+</div>

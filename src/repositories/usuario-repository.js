@@ -41,7 +41,7 @@ exports.authenticate = async(data) => {
     return Usuario.findOne({
         attributes: ['cd_usuario', 'ds_email', 'nm_usuario'],
         where: {
-            cd_usuario: data.cd_usuario,
+            ds_email: data.ds_email,
             ds_senha: data.ds_senha
         }
     });

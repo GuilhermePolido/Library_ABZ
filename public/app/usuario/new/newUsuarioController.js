@@ -29,6 +29,7 @@
                             user.limpar();
                             user.success.push(response.data);
                             user.salvando = false;
+                            $rootScope.doLogin = true;
                         }, function errorCallBack(response) {
                             user.error.push(response['data'].message);
                             user.salvando = false;
@@ -53,6 +54,11 @@
                             "NM_USUARIO": user.nome,
                             "NR_TELEFONE": user.telefone
                         };
+                    }
+
+                    user.login = () => {
+                        $rootScope.doLogin = true;
+                        user.limpar();
                     }
     });
 })();
