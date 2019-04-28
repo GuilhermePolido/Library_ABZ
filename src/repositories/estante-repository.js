@@ -1,7 +1,6 @@
 exports.create = async (estante) => {
     return new Promise((resolve, reject) => {
         db.query('INSERT INTO estante SET ?', estante, (err, results, fields) => {
-            console.log(err)
             if (err) reject();
             resolve(true);
         })

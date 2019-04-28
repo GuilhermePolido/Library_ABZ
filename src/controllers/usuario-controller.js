@@ -36,7 +36,7 @@ exports.authenticate = async (req, res, next) => {
         // Criptografa a senha
         req.body.ds_senha = md5(req.body.ds_senha + global.SALT_KEY);
 
-        // BUsca no banco um usuário com o login e senha passados
+        // Busca no banco um usuário com o login e senha passados
         var result = await repository.authenticate(req.body);
 
         // Caso não encontre
@@ -48,6 +48,9 @@ exports.authenticate = async (req, res, next) => {
         }
 
         var usuario = result.dataValues;
+
+console.log(usuario)
+
 
         // Gera o token
         const token = await authService.generateToken({
