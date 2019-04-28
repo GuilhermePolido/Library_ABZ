@@ -27,6 +27,16 @@ exports.getById = async(id) => {
     })
 }
 
+exports.findByName = async(livro) => {
+    return new Promise((resolve, reject) => {
+        db.query('SELECT * FROM livro WHERE ds_titulo like "%'+livro+'%"', function (err, results, fields) {
+            console.log(err)
+            if(err) reject();
+            resolve(results);
+        })
+    })
+}
+
 exports.update = async(id, data) => {    
     return new Promise((resolve, reject) => {
         db.query('UPDATE livro SET ? WHERE cd_livro = ?', [data, id], (err, results, fields) => {
