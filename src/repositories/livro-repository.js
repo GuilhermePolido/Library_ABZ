@@ -53,3 +53,14 @@ exports.emprestimo = async(livro) => {
         })       
     })
 }
+
+exports.devolucao = async (livro) => {
+    console.log(livro)
+    return new Promise((resolve, reject) => {
+        db.query('UPDATE livro SET st_livro = 0 WHERE cd_livro = ?', livro, (err, results, fields) => {
+            console.log(err)
+            if (err) reject();
+            resolve(true);
+        })
+    })
+}

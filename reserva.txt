@@ -16,6 +16,7 @@ create: precisa estar autenticado.
     campos:
     cd_emprestimo: select * from emprestimo where cd_livro = ? and dt_devolução is null
     dt_devolução: sysdate
+    
     setar dt_devolucao da tabela emprestimo para sysdate
 
 -- Filtros

@@ -36,12 +36,14 @@ const usuarioRoute = require('./src/routes/usuario-route');
 const estanteRoute = require('./src/routes/estante-route');
 const reservaRoute = require('./src/routes/reserva-route');
 const emprestimoRoute = require('./src/routes/emprestimo-route');
+const devolucaoRoute = require('./src/routes/devolucao-route');
 
 app.use('/API/livros', livroRoute);
 app.use('/API/usuarios', usuarioRoute);
 app.use('/API/estante', estanteRoute);
 app.use('/API/reserva', reservaRoute);
 app.use('/API/emprestimo', emprestimoRoute);
+app.use('/API/devolucao', devolucaoRoute);
 
 /*
  * Porta do servidor
