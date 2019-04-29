@@ -62,8 +62,32 @@
                     }
 
                     lv.emprestar = (livro) => {
-                        lv.screen = 5;
                         lv.livro = livro;
+                        
+
+                        $http({
+                            method: 'GET',
+                            url: `/api/usuarios/atual?token=${$cookies.get('token')}`,
+                        }).then(function succesCallBack(response) {
+                            const {data: dados} = response;
+                            lv.user = dados;
+                            console.log(lv.user);
+
+                            let data = lv.prepararData();
+                            $http({
+                                method: 'POST',
+                                url: '/api/emprestimo',
+                                data: data,
+                                headers: {'x-access-token': $cookies.get('token')}
+                            }).then(function succesCallBack(response) {
+                                console.log(response);
+                            }, function errorCallBack(response) {
+                                console.log(response);                            
+                            });
+                            console.log(response);
+                        }, function errorCallBack(response) {
+                            console.log(response);                            
+                        });
                     }
 
                     lv.reservar = (livro) => {
@@ -74,6 +98,13 @@
                     lv.devolver = (livro) => {
                         lv.screen = 6;
                         lv.livro = livro;
+                    }
+
+                    lv.prepararData = () => {
+                        return {
+                            "CD_USUARIO": lv.user,
+	                        "CD_LIVRO": lv.livro.CD_LIVRO
+                        };
                     }
     });
 })();

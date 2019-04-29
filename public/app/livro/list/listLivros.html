@@ -62,7 +62,7 @@
                     </button>
                     <ul class="dropdown-menu" uib-dropdown-menu role="menu" aria-labelledby="single-button">
                       <li role="menuitem" ng-click="lv.open(livro)"><a>Detalhes</a></li>
-                      <li role="menuitem"><a href="#/livros/emprestimo/{{livro.CD_LIVRO}}">Emprestar</a></li>
+                      <li role="menuitem"><a ng-click="lv.emprestar(livro)">Emprestar</a></li>
                       <li role="menuitem"><a href="#/livros/reserva/{{livro.CD_LIVRO}}">Reservar</a></li>
                       <li role="menuitem"><a href="#/livros/devolucao/{{livro.CD_LIVRO}}">Devolver</a></li>
                     </ul>
@@ -167,22 +167,6 @@
       </div>
       <div class="panel-body" ng-show="lv.livro">
         {{lv.livro}}
-      </div>
-    </div>
-  </div>
-  <div ng-show="lv.screen == 5">
-    <div class="panel panel-default">
-      <div class="panel-heading">
-        <div>
-          <button class="btn btn-default btn-sm" ng-click="lv.back()">Voltar</button>
-        </div>
-        <div class="title">
-          <strong>Emprestimo de Livro</strong>
-        </div>
-      </div>
-      <div class="panel-body" ng-show="lv.livro">
-        {{lv.livro}}
-
       </div>
     </div>
   </div>

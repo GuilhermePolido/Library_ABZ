@@ -8,6 +8,12 @@
                 const params = $routeParams;
                 let lv = this;
                 lv.livroId = params.id;
+
+                
+
+
+
+
                 lv.usuario = '';
                 lv.dataEmprestimo = '';
                 lv.dataDevolucao = '';
