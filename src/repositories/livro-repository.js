@@ -28,8 +28,29 @@ exports.get = async() => {
 }
 
 exports.getById = async(id) => {
+    const value = `%${id}%`;
+    const fields = [
+        'DS_TITULO',
+        'NM_AUTOR',
+        'NM_EDITOR',
+        'NR_CLASSIFICACAO',
+        'NR_PAGINA',
+        'CD_LIVRO'
+    ];
+
+    let values = [];
+
+    let select = 'SELECT * FROM livro WHERE';
+    const like = ' LIKE ?';
+    const or = ' OR';
+
+    for (let i = 0; i < fields.length; i++) {
+        select += ` ${fields[i]}${like}${i == fields.length -1 ? '' : or}`;
+        values.push(value);
+    }
+
     return new Promise((resolve, reject) => {
-        db.query('SELECT * FROM livro WHERE cd_livro = ?', id, function (err, results, fields) {
+        db.query(select, values, function (err, results, fields) {
             if(err) reject();
             resolve(results);
         })

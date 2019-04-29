@@ -44,6 +44,6 @@ app.use('/API/reserva', reservaRoute);
 /*
  * Porta do servidor
  */
-http.listen(3000, function(){
-	console.log('Listening on port 3000')
+http.listen(4000, function(){
+	console.log('Listening on port 4000')
 })
