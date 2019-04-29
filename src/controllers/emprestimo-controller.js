@@ -8,7 +8,7 @@ exports.post = async (req, res, next) => {
 
         req.body.dt_emprestimo = date.format(now, 'YYYY/MM/DD');
         //req.body.dt_devolucao  = date.format(date.addDays(now, 7), 'DD/MM/YYYY');
-
+        console.log(req.body.cd_livro);
         // Seta o st_livro como emprestado
         await livro_repository.emprestimo(req.body.cd_livro);
 

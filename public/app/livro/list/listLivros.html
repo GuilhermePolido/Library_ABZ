@@ -63,8 +63,7 @@
                     <ul class="dropdown-menu" uib-dropdown-menu role="menu" aria-labelledby="single-button">
                       <li role="menuitem" ng-click="lv.open(livro)"><a>Detalhes</a></li>
                       <li role="menuitem"><a ng-click="lv.emprestar(livro)">Emprestar</a></li>
-                      <li role="menuitem"><a href="#/livros/reserva/{{livro.CD_LIVRO}}">Reservar</a></li>
-                      <li role="menuitem"><a href="#/livros/devolucao/{{livro.CD_LIVRO}}">Devolver</a></li>
+                      <li role="menuitem"><a ng-click="lv.devolver(livro)">Devolver</a></li>
                     </ul>
                   </div>
                 </td>

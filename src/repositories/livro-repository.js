@@ -56,8 +56,10 @@ exports.delete = async(id) => {
 }
 
 exports.emprestimo = async(livro) => {
+    console.log(livro);
     return new Promise((resolve, reject) => {
         db.query('UPDATE livro SET st_livro = 1 WHERE cd_livro = ?', livro, (err, results, fields) => {
+            console.log(err);
             if(err) reject();
             resolve(true);
         })       

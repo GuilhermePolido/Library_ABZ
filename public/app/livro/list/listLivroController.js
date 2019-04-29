@@ -63,8 +63,6 @@
 
                     lv.emprestar = (livro) => {
                         lv.livro = livro;
-                        
-
                         $http({
                             method: 'GET',
                             url: `/api/usuarios/atual?token=${$cookies.get('token')}`,
@@ -96,14 +94,36 @@
                     }
 
                     lv.devolver = (livro) => {
-                        lv.screen = 6;
                         lv.livro = livro;
+                        $http({
+                            method: 'GET',
+                            url: `/api/usuarios/atual?token=${$cookies.get('token')}`,
+                        }).then(function succesCallBack(response) {
+                            const {data: dados} = response;
+                            lv.user = dados;
+                            console.log(lv.user);
+
+                            let data = lv.prepararData();
+                            $http({
+                                method: 'POST',
+                                url: '/api/devolucao',
+                                data: data,
+                                headers: {'x-access-token': $cookies.get('token')}
+                            }).then(function succesCallBack(response) {
+                                console.log(response);
+                            }, function errorCallBack(response) {
+                                console.log(response);                            
+                            });
+                            console.log(response);
+                        }, function errorCallBack(response) {
+                            console.log(response);                            
+                        });
                     }
 
                     lv.prepararData = () => {
                         return {
-                            "CD_USUARIO": lv.user,
-	                        "CD_LIVRO": lv.livro.CD_LIVRO
+                            "cd_usuario": lv.user,
+	                        "cd_livro": lv.livro.CD_LIVRO
                         };
                     }
     });
