@@ -3,34 +3,74 @@
     <div class="panel panel-default">
       <div class="panel-heading principal"><strong>Livros</strong></div>
       <div class="panel-body">
-        <table class="listaLivros table table-hover" ng-show="lv.livros.length > 0">
-          <tr>
-            <th>Codigo</th>
-            <th>Titulo</th>
-            <th>Autor</th>
-            <th>Situação</th>
-            <th></th>
-          </tr>
-          <tr ng-repeat="livro in lv.livros">
-            <td>{{livro.CD_LIVRO}}</td>
-            <td>{{livro.DS_TITULO}}</td>
-            <td>{{livro.NM_AUTOR}}</td>
-            <td>{{livro.ST_LIVRO}}</td>
-            <td>
-              <div class="btn-group" uib-dropdown is-open="status.isopen">
-                <button id="single-button" type="button" class="btn btn-default btn-sm" uib-dropdown-toggle
-                  ng-disabled="disabled">
-                  Ações <span class="caret"></span>
-                </button>
-                <ul class="dropdown-menu" uib-dropdown-menu role="menu" aria-labelledby="single-button">
-                  <li role="menuitem" ng-click="lv.open(livro)"><a>Detalhes</a></li>
-                  <li role="menuitem" ng-click="lv.edit(livro)"><a>Editar</a></li>
-                  <li role="menuitem" ng-click="lv.delete(livro)"><a>Excluir</a></li>
-                </ul>
-              </div>
-            </td>
-          </tr>
-        </table>
+        <uib-tabset active="activeForm">
+          
+          <uib-tab index="0" heading="Meus Livros">
+            <br>
+            <table class="listaLivros table table-hover" ng-show="lv.livros.length > 0">
+              <tr>
+                <th>Codigo</th>
+                <th>Titulo</th>
+                <th>Autor</th>
+                <th>Situação</th>
+                <th></th>
+              </tr>
+              <tr ng-repeat="livro in lv.livros">
+                <td>{{livro.CD_LIVRO}}</td>
+                <td>{{livro.DS_TITULO}}</td>
+                <td>{{livro.NM_AUTOR}}</td>
+                <td>{{livro.ST_LIVRO}}</td>
+                <td>
+                  <div class="btn-group" uib-dropdown is-open="status.isopen">
+                    <button id="single-button" type="button" class="btn btn-default btn-sm" uib-dropdown-toggle
+                      ng-disabled="disabled">
+                      Ações <span class="caret"></span>
+                    </button>
+                    <ul class="dropdown-menu" uib-dropdown-menu role="menu" aria-labelledby="single-button">
+                      <li role="menuitem" ng-click="lv.open(livro)"><a>Detalhes</a></li>
+                      <li role="menuitem"><a href="#/livros/emprestimo/{{livro.CD_LIVRO}}">Emprestar</a></li>
+                      <li role="menuitem"><a href="#/livros/reserva/{{livro.CD_LIVRO}}">Reservar</a></li>
+                      <li role="menuitem"><a href="#/livros/devolucao/{{livro.CD_LIVRO}}">Devolver</a></li>
+                      <li role="menuitem" ng-click="lv.edit(livro)"><a>Editar</a></li>
+                      <li role="menuitem" ng-click="lv.delete(livro)"><a>Excluir</a></li>
+                    </ul>
+                  </div>
+                </td>
+              </tr>
+            </table>
+          </uib-tab>
+          <uib-tab index="1" heading="Todos os Livros">
+            <br>
+            <table class="listaLivros table table-hover" ng-show="lv.allLivros.length > 0">
+              <tr>
+                <th>Codigo</th>
+                <th>Titulo</th>
+                <th>Autor</th>
+                <th>Situação</th>
+                <th></th>
+              </tr>
+              <tr ng-repeat="livro in lv.allLivros">
+                <td>{{livro.CD_LIVRO}}</td>
+                <td>{{livro.DS_TITULO}}</td>
+                <td>{{livro.NM_AUTOR}}</td>
+                <td>{{livro.ST_LIVRO}}</td>
+                <td>
+                  <div class="btn-group" uib-dropdown is-open="status.isopen">
+                    <button id="single-button" type="button" class="btn btn-default btn-sm" uib-dropdown-toggle
+                      ng-disabled="disabled">
+                      Ações <span class="caret"></span>
+                    </button>
+                    <ul class="dropdown-menu" uib-dropdown-menu role="menu" aria-labelledby="single-button">
+                      <li role="menuitem" ng-click="lv.open(livro)"><a>Detalhes</a></li>
+                      <li role="menuitem"><a ng-click="lv.emprestar(livro)">Emprestar</a></li>
+                      <li role="menuitem"><a ng-click="lv.devolver(livro)">Devolver</a></li>
+                    </ul>
+                  </div>
+                </td>
+              </tr>
+            </table>
+          </uib-tab>
+        </uib-tabset>
       </div>
     </div>
   </div>
@@ -122,21 +162,6 @@
         </div>
         <div class="title">
           <strong>Reservar Livro</strong>
-        </div>
-      </div>
-      <div class="panel-body" ng-show="lv.livro">
-        {{lv.livro}}
-      </div>
-    </div>
-  </div>
-  <div ng-show="lv.screen == 5">
-    <div class="panel panel-default">
-      <div class="panel-heading">
-        <div>
-          <button class="btn btn-default btn-sm" ng-click="lv.back()">Voltar</button>
-        </div>
-        <div class="title">
-          <strong>Emprestimo de Livro</strong>
         </div>
       </div>
       <div class="panel-body" ng-show="lv.livro">

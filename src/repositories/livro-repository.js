@@ -9,15 +9,6 @@ exports.create = async(livro) => {
     })
 }
 
-/*
-exports.create = async(livro) => {
-    return Livro.query('INSERT INTO LIVRO SET ?', {
-        raw: true, 
-        replacements: [livro]
-    });
-}
-*/
-
 exports.get = async() => {
     return new Promise((resolve, reject) => {
         db.query('SELECT * FROM livro', function (err, results, fields) {
@@ -30,6 +21,16 @@ exports.get = async() => {
 exports.getById = async(id) => {
     return new Promise((resolve, reject) => {
         db.query('SELECT * FROM livro WHERE cd_livro = ?', id, function (err, results, fields) {
+            if(err) reject();
+            resolve(results);
+        })
+    })
+}
+
+exports.findByName = async(livro) => {
+    return new Promise((resolve, reject) => {
+        db.query('SELECT * FROM livro WHERE ds_titulo like "%'+livro+'%"', function (err, results, fields) {
+            console.log(err)
             if(err) reject();
             resolve(results);
         })
@@ -51,5 +52,27 @@ exports.delete = async(id) => {
             if(err) reject();
             resolve(true);
         })       
+    })
+}
+
+exports.emprestimo = async(livro) => {
+    console.log(livro);
+    return new Promise((resolve, reject) => {
+        db.query('UPDATE livro SET st_livro = 1 WHERE cd_livro = ?', livro, (err, results, fields) => {
+            console.log(err);
+            if(err) reject();
+            resolve(true);
+        })       
+    })
+}
+
+exports.devolucao = async (livro) => {
+    console.log(livro)
+    return new Promise((resolve, reject) => {
+        db.query('UPDATE livro SET st_livro = 0 WHERE cd_livro = ?', livro, (err, results, fields) => {
+            console.log(err)
+            if (err) reject();
+            resolve(true);
+        })
     })
 }

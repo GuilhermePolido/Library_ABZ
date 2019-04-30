@@ -14,6 +14,23 @@ exports.get = async (req, res, next) => {
     }
 }
 
+exports.getAtual = async (req, res, next) => {
+    try {
+        // Recupera o token
+        var token = req.body.token || req.query.token || req.headers['x-access-token'];
+
+        // Decodifica o token
+        var data = await authService.decodeToken(token);
+
+        // Consulta as estantes desse usuário
+        res.status(200).send(data.user);
+    } catch (e) {
+        res.status(500).send({
+            message: 'Falha ao processar sua requisição. ' + e
+        });
+    }
+}
+
 exports.post = async (req, res, next) => {
     try {
         // Criptografa a senha

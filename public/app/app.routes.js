@@ -11,20 +11,8 @@
                 .when('/livros/new', {
                     templateUrl: CONFIG.PATH + 'livro/new/newLivro.html'
                 })
-                .when('/livros/reserva', {
-                    templateUrl: CONFIG.PATH + 'livro/reserva/reserva.html'
-                })
                 .when('/livros/reserva/:id', {
                     templateUrl: CONFIG.PATH + 'livro/reserva/reserva.html'
-                })
-                .when('/livros/emprestimo', {
-                    templateUrl: CONFIG.PATH + 'livro/emprestimo/emprestimo.html'
-                })
-                .when('/livros/emprestimo/:id', {
-                    templateUrl: CONFIG.PATH + 'livro/emprestimo/emprestimo.html'
-                })
-                .when('/livros/devolucao', {
-                    templateUrl: CONFIG.PATH + 'livro/devolucao/devolucao.html'
                 })
                 .when('/livros/devolucao/:id', {
                     templateUrl: CONFIG.PATH + 'livro/devolucao/devolucao.html'
